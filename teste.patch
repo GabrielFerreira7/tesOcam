@@ -1,0 +1,3208 @@
+diff -urN ./.git/COMMIT_EDITMSG ../welcome-to-ocaml-GabrielFerreira7-main/.git/COMMIT_EDITMSG
+--- ./.git/COMMIT_EDITMSG	2022-03-25 21:49:07.161255400 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/COMMIT_EDITMSG	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-segunda modificacao
+diff -urN ./.git/FETCH_HEAD ../welcome-to-ocaml-GabrielFerreira7-main/.git/FETCH_HEAD
+--- ./.git/FETCH_HEAD	2022-03-25 12:34:28.654937300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/FETCH_HEAD	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-15255654640e7ed07ae3fa6dc036f3f7f8273770		branch 'main' of https://github.com/ufop-bcc328/welcome-to-ocaml-GabrielFerreira7
+diff -urN ./.git/HEAD ../welcome-to-ocaml-GabrielFerreira7-main/.git/HEAD
+--- ./.git/HEAD	2022-03-25 12:33:20.575906100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/HEAD	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-ref: refs/heads/main
+diff -urN ./.git/config ../welcome-to-ocaml-GabrielFerreira7-main/.git/config
+--- ./.git/config	2022-03-25 21:49:13.829924300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/config	1969-12-31 21:00:00.000000000 -0300
+@@ -1,13 +0,0 @@
+-[core]
+-	repositoryformatversion = 0
+-	filemode = false
+-	bare = false
+-	logallrefupdates = true
+-	symlinks = false
+-	ignorecase = true
+-[remote "origin"]
+-	url = https://github.com/ufop-bcc328/welcome-to-ocaml-GabrielFerreira7.git
+-	fetch = +refs/heads/*:refs/remotes/origin/*
+-[branch "main"]
+-	remote = origin
+-	merge = refs/heads/main
+diff -urN ./.git/description ../welcome-to-ocaml-GabrielFerreira7-main/.git/description
+--- ./.git/description	2022-03-25 12:32:28.549194200 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/description	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-Unnamed repository; edit this file 'description' to name the repository.
+diff -urN ./.git/hooks/applypatch-msg.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/applypatch-msg.sample
+--- ./.git/hooks/applypatch-msg.sample	2022-03-25 12:32:28.549194200 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/applypatch-msg.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,15 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to check the commit log message taken by
+-# applypatch from an e-mail message.
+-#
+-# The hook should exit with non-zero status after issuing an
+-# appropriate message if it wants to stop the commit.  The hook is
+-# allowed to edit the commit message file.
+-#
+-# To enable this hook, rename this file to "applypatch-msg".
+-
+-. git-sh-setup
+-commitmsg="$(git rev-parse --git-path hooks/commit-msg)"
+-test -x "$commitmsg" && exec "$commitmsg" ${1+"$@"}
+-:
+diff -urN ./.git/hooks/commit-msg.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/commit-msg.sample
+--- ./.git/hooks/commit-msg.sample	2022-03-25 12:32:28.549194200 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/commit-msg.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,24 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to check the commit log message.
+-# Called by "git commit" with one argument, the name of the file
+-# that has the commit message.  The hook should exit with non-zero
+-# status after issuing an appropriate message if it wants to stop the
+-# commit.  The hook is allowed to edit the commit message file.
+-#
+-# To enable this hook, rename this file to "commit-msg".
+-
+-# Uncomment the below to add a Signed-off-by line to the message.
+-# Doing this in a hook is a bad idea in general, but the prepare-commit-msg
+-# hook is more suited to it.
+-#
+-# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+-# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
+-
+-# This example catches duplicate Signed-off-by lines.
+-
+-test "" = "$(grep '^Signed-off-by: ' "$1" |
+-	 sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
+-	echo >&2 Duplicate Signed-off-by lines.
+-	exit 1
+-}
+diff -urN ./.git/hooks/fsmonitor-watchman.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/fsmonitor-watchman.sample
+--- ./.git/hooks/fsmonitor-watchman.sample	2022-03-25 12:32:28.549194200 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/fsmonitor-watchman.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,173 +0,0 @@
+-#!/usr/bin/perl
+-
+-use strict;
+-use warnings;
+-use IPC::Open2;
+-
+-# An example hook script to integrate Watchman
+-# (https://facebook.github.io/watchman/) with git to speed up detecting
+-# new and modified files.
+-#
+-# The hook is passed a version (currently 2) and last update token
+-# formatted as a string and outputs to stdout a new update token and
+-# all files that have been modified since the update token. Paths must
+-# be relative to the root of the working tree and separated by a single NUL.
+-#
+-# To enable this hook, rename this file to "query-watchman" and set
+-# 'git config core.fsmonitor .git/hooks/query-watchman'
+-#
+-my ($version, $last_update_token) = @ARGV;
+-
+-# Uncomment for debugging
+-# print STDERR "$0 $version $last_update_token\n";
+-
+-# Check the hook interface version
+-if ($version ne 2) {
+-	die "Unsupported query-fsmonitor hook version '$version'.\n" .
+-	    "Falling back to scanning...\n";
+-}
+-
+-my $git_work_tree = get_working_dir();
+-
+-my $retry = 1;
+-
+-my $json_pkg;
+-eval {
+-	require JSON::XS;
+-	$json_pkg = "JSON::XS";
+-	1;
+-} or do {
+-	require JSON::PP;
+-	$json_pkg = "JSON::PP";
+-};
+-
+-launch_watchman();
+-
+-sub launch_watchman {
+-	my $o = watchman_query();
+-	if (is_work_tree_watched($o)) {
+-		output_result($o->{clock}, @{$o->{files}});
+-	}
+-}
+-
+-sub output_result {
+-	my ($clockid, @files) = @_;
+-
+-	# Uncomment for debugging watchman output
+-	# open (my $fh, ">", ".git/watchman-output.out");
+-	# binmode $fh, ":utf8";
+-	# print $fh "$clockid\n@files\n";
+-	# close $fh;
+-
+-	binmode STDOUT, ":utf8";
+-	print $clockid;
+-	print "\0";
+-	local $, = "\0";
+-	print @files;
+-}
+-
+-sub watchman_clock {
+-	my $response = qx/watchman clock "$git_work_tree"/;
+-	die "Failed to get clock id on '$git_work_tree'.\n" .
+-		"Falling back to scanning...\n" if $? != 0;
+-
+-	return $json_pkg->new->utf8->decode($response);
+-}
+-
+-sub watchman_query {
+-	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+-	or die "open2() failed: $!\n" .
+-	"Falling back to scanning...\n";
+-
+-	# In the query expression below we're asking for names of files that
+-	# changed since $last_update_token but not from the .git folder.
+-	#
+-	# To accomplish this, we're using the "since" generator to use the
+-	# recency index to select candidate nodes and "fields" to limit the
+-	# output to file names only. Then we're using the "expression" term to
+-	# further constrain the results.
+-	if (substr($last_update_token, 0, 1) eq "c") {
+-		$last_update_token = "\"$last_update_token\"";
+-	}
+-	my $query = <<"	END";
+-		["query", "$git_work_tree", {
+-			"since": $last_update_token,
+-			"fields": ["name"],
+-			"expression": ["not", ["dirname", ".git"]]
+-		}]
+-	END
+-
+-	# Uncomment for debugging the watchman query
+-	# open (my $fh, ">", ".git/watchman-query.json");
+-	# print $fh $query;
+-	# close $fh;
+-
+-	print CHLD_IN $query;
+-	close CHLD_IN;
+-	my $response = do {local $/; <CHLD_OUT>};
+-
+-	# Uncomment for debugging the watch response
+-	# open ($fh, ">", ".git/watchman-response.json");
+-	# print $fh $response;
+-	# close $fh;
+-
+-	die "Watchman: command returned no output.\n" .
+-	"Falling back to scanning...\n" if $response eq "";
+-	die "Watchman: command returned invalid output: $response\n" .
+-	"Falling back to scanning...\n" unless $response =~ /^\{/;
+-
+-	return $json_pkg->new->utf8->decode($response);
+-}
+-
+-sub is_work_tree_watched {
+-	my ($output) = @_;
+-	my $error = $output->{error};
+-	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
+-		$retry--;
+-		my $response = qx/watchman watch "$git_work_tree"/;
+-		die "Failed to make watchman watch '$git_work_tree'.\n" .
+-		    "Falling back to scanning...\n" if $? != 0;
+-		$output = $json_pkg->new->utf8->decode($response);
+-		$error = $output->{error};
+-		die "Watchman: $error.\n" .
+-		"Falling back to scanning...\n" if $error;
+-
+-		# Uncomment for debugging watchman output
+-		# open (my $fh, ">", ".git/watchman-output.out");
+-		# close $fh;
+-
+-		# Watchman will always return all files on the first query so
+-		# return the fast "everything is dirty" flag to git and do the
+-		# Watchman query just to get it over with now so we won't pay
+-		# the cost in git to look up each individual file.
+-		my $o = watchman_clock();
+-		$error = $output->{error};
+-
+-		die "Watchman: $error.\n" .
+-		"Falling back to scanning...\n" if $error;
+-
+-		output_result($o->{clock}, ("/"));
+-		$last_update_token = $o->{clock};
+-
+-		eval { launch_watchman() };
+-		return 0;
+-	}
+-
+-	die "Watchman: $error.\n" .
+-	"Falling back to scanning...\n" if $error;
+-
+-	return 1;
+-}
+-
+-sub get_working_dir {
+-	my $working_dir;
+-	if ($^O =~ 'msys' || $^O =~ 'cygwin') {
+-		$working_dir = Win32::GetCwd();
+-		$working_dir =~ tr/\\/\//;
+-	} else {
+-		require Cwd;
+-		$working_dir = Cwd::cwd();
+-	}
+-
+-	return $working_dir;
+-}
+diff -urN ./.git/hooks/post-update.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/post-update.sample
+--- ./.git/hooks/post-update.sample	2022-03-25 12:32:28.643163200 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/post-update.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,8 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to prepare a packed repository for use over
+-# dumb transports.
+-#
+-# To enable this hook, rename this file to "post-update".
+-
+-exec git update-server-info
+diff -urN ./.git/hooks/pre-applypatch.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-applypatch.sample
+--- ./.git/hooks/pre-applypatch.sample	2022-03-25 12:32:28.643163200 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-applypatch.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,14 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to verify what is about to be committed
+-# by applypatch from an e-mail message.
+-#
+-# The hook should exit with non-zero status after issuing an
+-# appropriate message if it wants to stop the commit.
+-#
+-# To enable this hook, rename this file to "pre-applypatch".
+-
+-. git-sh-setup
+-precommit="$(git rev-parse --git-path hooks/pre-commit)"
+-test -x "$precommit" && exec "$precommit" ${1+"$@"}
+-:
+diff -urN ./.git/hooks/pre-commit.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-commit.sample
+--- ./.git/hooks/pre-commit.sample	2022-03-25 12:32:28.658619100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-commit.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,49 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to verify what is about to be committed.
+-# Called by "git commit" with no arguments.  The hook should
+-# exit with non-zero status after issuing an appropriate message if
+-# it wants to stop the commit.
+-#
+-# To enable this hook, rename this file to "pre-commit".
+-
+-if git rev-parse --verify HEAD >/dev/null 2>&1
+-then
+-	against=HEAD
+-else
+-	# Initial commit: diff against an empty tree object
+-	against=$(git hash-object -t tree /dev/null)
+-fi
+-
+-# If you want to allow non-ASCII filenames set this variable to true.
+-allownonascii=$(git config --type=bool hooks.allownonascii)
+-
+-# Redirect output to stderr.
+-exec 1>&2
+-
+-# Cross platform projects tend to avoid non-ASCII filenames; prevent
+-# them from being added to the repository. We exploit the fact that the
+-# printable range starts at the space character and ends with tilde.
+-if [ "$allownonascii" != "true" ] &&
+-	# Note that the use of brackets around a tr range is ok here, (it's
+-	# even required, for portability to Solaris 10's /usr/bin/tr), since
+-	# the square bracket bytes happen to fall in the designated range.
+-	test $(git diff --cached --name-only --diff-filter=A -z $against |
+-	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+-then
+-	cat <<\EOF
+-Error: Attempt to add a non-ASCII file name.
+-
+-This can cause problems if you want to work with people on other platforms.
+-
+-To be portable it is advisable to rename the file.
+-
+-If you know what you are doing you can disable this check using:
+-
+-  git config hooks.allownonascii true
+-EOF
+-	exit 1
+-fi
+-
+-# If there are whitespace errors, print the offending file names and fail.
+-exec git diff-index --check --cached $against --
+diff -urN ./.git/hooks/pre-merge-commit.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-merge-commit.sample
+--- ./.git/hooks/pre-merge-commit.sample	2022-03-25 12:32:28.674385100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-merge-commit.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,13 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to verify what is about to be committed.
+-# Called by "git merge" with no arguments.  The hook should
+-# exit with non-zero status after issuing an appropriate message to
+-# stderr if it wants to stop the merge commit.
+-#
+-# To enable this hook, rename this file to "pre-merge-commit".
+-
+-. git-sh-setup
+-test -x "$GIT_DIR/hooks/pre-commit" &&
+-        exec "$GIT_DIR/hooks/pre-commit"
+-:
+diff -urN ./.git/hooks/pre-push.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-push.sample
+--- ./.git/hooks/pre-push.sample	2022-03-25 12:32:28.674385100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-push.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,53 +0,0 @@
+-#!/bin/sh
+-
+-# An example hook script to verify what is about to be pushed.  Called by "git
+-# push" after it has checked the remote status, but before anything has been
+-# pushed.  If this script exits with a non-zero status nothing will be pushed.
+-#
+-# This hook is called with the following parameters:
+-#
+-# $1 -- Name of the remote to which the push is being done
+-# $2 -- URL to which the push is being done
+-#
+-# If pushing without using a named remote those arguments will be equal.
+-#
+-# Information about the commits which are being pushed is supplied as lines to
+-# the standard input in the form:
+-#
+-#   <local ref> <local oid> <remote ref> <remote oid>
+-#
+-# This sample shows how to prevent push of commits where the log message starts
+-# with "WIP" (work in progress).
+-
+-remote="$1"
+-url="$2"
+-
+-zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+-
+-while read local_ref local_oid remote_ref remote_oid
+-do
+-	if test "$local_oid" = "$zero"
+-	then
+-		# Handle delete
+-		:
+-	else
+-		if test "$remote_oid" = "$zero"
+-		then
+-			# New branch, examine all commits
+-			range="$local_oid"
+-		else
+-			# Update to existing branch, examine new commits
+-			range="$remote_oid..$local_oid"
+-		fi
+-
+-		# Check for WIP commit
+-		commit=$(git rev-list -n 1 --grep '^WIP' "$range")
+-		if test -n "$commit"
+-		then
+-			echo >&2 "Found WIP commit in $local_ref, not pushing"
+-			exit 1
+-		fi
+-	fi
+-done
+-
+-exit 0
+diff -urN ./.git/hooks/pre-rebase.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-rebase.sample
+--- ./.git/hooks/pre-rebase.sample	2022-03-25 12:32:28.674385100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-rebase.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,169 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (c) 2006, 2008 Junio C Hamano
+-#
+-# The "pre-rebase" hook is run just before "git rebase" starts doing
+-# its job, and can prevent the command from running by exiting with
+-# non-zero status.
+-#
+-# The hook is called with the following parameters:
+-#
+-# $1 -- the upstream the series was forked from.
+-# $2 -- the branch being rebased (or empty when rebasing the current branch).
+-#
+-# This sample shows how to prevent topic branches that are already
+-# merged to 'next' branch from getting rebased, because allowing it
+-# would result in rebasing already published history.
+-
+-publish=next
+-basebranch="$1"
+-if test "$#" = 2
+-then
+-	topic="refs/heads/$2"
+-else
+-	topic=`git symbolic-ref HEAD` ||
+-	exit 0 ;# we do not interrupt rebasing detached HEAD
+-fi
+-
+-case "$topic" in
+-refs/heads/??/*)
+-	;;
+-*)
+-	exit 0 ;# we do not interrupt others.
+-	;;
+-esac
+-
+-# Now we are dealing with a topic branch being rebased
+-# on top of master.  Is it OK to rebase it?
+-
+-# Does the topic really exist?
+-git show-ref -q "$topic" || {
+-	echo >&2 "No such branch $topic"
+-	exit 1
+-}
+-
+-# Is topic fully merged to master?
+-not_in_master=`git rev-list --pretty=oneline ^master "$topic"`
+-if test -z "$not_in_master"
+-then
+-	echo >&2 "$topic is fully merged to master; better remove it."
+-	exit 1 ;# we could allow it, but there is no point.
+-fi
+-
+-# Is topic ever merged to next?  If so you should not be rebasing it.
+-only_next_1=`git rev-list ^master "^$topic" ${publish} | sort`
+-only_next_2=`git rev-list ^master           ${publish} | sort`
+-if test "$only_next_1" = "$only_next_2"
+-then
+-	not_in_topic=`git rev-list "^$topic" master`
+-	if test -z "$not_in_topic"
+-	then
+-		echo >&2 "$topic is already up to date with master"
+-		exit 1 ;# we could allow it, but there is no point.
+-	else
+-		exit 0
+-	fi
+-else
+-	not_in_next=`git rev-list --pretty=oneline ^${publish} "$topic"`
+-	/usr/bin/perl -e '
+-		my $topic = $ARGV[0];
+-		my $msg = "* $topic has commits already merged to public branch:\n";
+-		my (%not_in_next) = map {
+-			/^([0-9a-f]+) /;
+-			($1 => 1);
+-		} split(/\n/, $ARGV[1]);
+-		for my $elem (map {
+-				/^([0-9a-f]+) (.*)$/;
+-				[$1 => $2];
+-			} split(/\n/, $ARGV[2])) {
+-			if (!exists $not_in_next{$elem->[0]}) {
+-				if ($msg) {
+-					print STDERR $msg;
+-					undef $msg;
+-				}
+-				print STDERR " $elem->[1]\n";
+-			}
+-		}
+-	' "$topic" "$not_in_next" "$not_in_master"
+-	exit 1
+-fi
+-
+-<<\DOC_END
+-
+-This sample hook safeguards topic branches that have been
+-published from being rewound.
+-
+-The workflow assumed here is:
+-
+- * Once a topic branch forks from "master", "master" is never
+-   merged into it again (either directly or indirectly).
+-
+- * Once a topic branch is fully cooked and merged into "master",
+-   it is deleted.  If you need to build on top of it to correct
+-   earlier mistakes, a new topic branch is created by forking at
+-   the tip of the "master".  This is not strictly necessary, but
+-   it makes it easier to keep your history simple.
+-
+- * Whenever you need to test or publish your changes to topic
+-   branches, merge them into "next" branch.
+-
+-The script, being an example, hardcodes the publish branch name
+-to be "next", but it is trivial to make it configurable via
+-$GIT_DIR/config mechanism.
+-
+-With this workflow, you would want to know:
+-
+-(1) ... if a topic branch has ever been merged to "next".  Young
+-    topic branches can have stupid mistakes you would rather
+-    clean up before publishing, and things that have not been
+-    merged into other branches can be easily rebased without
+-    affecting other people.  But once it is published, you would
+-    not want to rewind it.
+-
+-(2) ... if a topic branch has been fully merged to "master".
+-    Then you can delete it.  More importantly, you should not
+-    build on top of it -- other people may already want to
+-    change things related to the topic as patches against your
+-    "master", so if you need further changes, it is better to
+-    fork the topic (perhaps with the same name) afresh from the
+-    tip of "master".
+-
+-Let's look at this example:
+-
+-		   o---o---o---o---o---o---o---o---o---o "next"
+-		  /       /           /           /
+-		 /   a---a---b A     /           /
+-		/   /               /           /
+-	       /   /   c---c---c---c B         /
+-	      /   /   /             \         /
+-	     /   /   /   b---b C     \       /
+-	    /   /   /   /             \     /
+-    ---o---o---o---o---o---o---o---o---o---o---o "master"
+-
+-
+-A, B and C are topic branches.
+-
+- * A has one fix since it was merged up to "next".
+-
+- * B has finished.  It has been fully merged up to "master" and "next",
+-   and is ready to be deleted.
+-
+- * C has not merged to "next" at all.
+-
+-We would want to allow C to be rebased, refuse A, and encourage
+-B to be deleted.
+-
+-To compute (1):
+-
+-	git rev-list ^master ^topic next
+-	git rev-list ^master        next
+-
+-	if these match, topic has not merged in next at all.
+-
+-To compute (2):
+-
+-	git rev-list master..topic
+-
+-	if this is empty, it is fully merged to "master".
+-
+-DOC_END
+diff -urN ./.git/hooks/pre-receive.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-receive.sample
+--- ./.git/hooks/pre-receive.sample	2022-03-25 12:32:28.674385100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-receive.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,24 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to make use of push options.
+-# The example simply echoes all push options that start with 'echoback='
+-# and rejects all pushes when the "reject" push option is used.
+-#
+-# To enable this hook, rename this file to "pre-receive".
+-
+-if test -n "$GIT_PUSH_OPTION_COUNT"
+-then
+-	i=0
+-	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"
+-	do
+-		eval "value=\$GIT_PUSH_OPTION_$i"
+-		case "$value" in
+-		echoback=*)
+-			echo "echo from the pre-receive-hook: ${value#*=}" >&2
+-			;;
+-		reject)
+-			exit 1
+-		esac
+-		i=$((i + 1))
+-	done
+-fi
+diff -urN ./.git/hooks/prepare-commit-msg.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/prepare-commit-msg.sample
+--- ./.git/hooks/prepare-commit-msg.sample	2022-03-25 12:32:28.674385100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/prepare-commit-msg.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,42 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to prepare the commit log message.
+-# Called by "git commit" with the name of the file that has the
+-# commit message, followed by the description of the commit
+-# message's source.  The hook's purpose is to edit the commit
+-# message file.  If the hook fails with a non-zero status,
+-# the commit is aborted.
+-#
+-# To enable this hook, rename this file to "prepare-commit-msg".
+-
+-# This hook includes three examples. The first one removes the
+-# "# Please enter the commit message..." help message.
+-#
+-# The second includes the output of "git diff --name-status -r"
+-# into the message, just before the "git status" output.  It is
+-# commented because it doesn't cope with --amend or with squashed
+-# commits.
+-#
+-# The third example adds a Signed-off-by line to the message, that can
+-# still be edited.  This is rarely a good idea.
+-
+-COMMIT_MSG_FILE=$1
+-COMMIT_SOURCE=$2
+-SHA1=$3
+-
+-/usr/bin/perl -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"
+-
+-# case "$COMMIT_SOURCE,$SHA1" in
+-#  ,|template,)
+-#    /usr/bin/perl -i.bak -pe '
+-#       print "\n" . `git diff --cached --name-status -r`
+-# 	 if /^#/ && $first++ == 0' "$COMMIT_MSG_FILE" ;;
+-#  *) ;;
+-# esac
+-
+-# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+-# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
+-# if test -z "$COMMIT_SOURCE"
+-# then
+-#   /usr/bin/perl -i.bak -pe 'print "\n" if !$first_line++' "$COMMIT_MSG_FILE"
+-# fi
+diff -urN ./.git/hooks/push-to-checkout.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/push-to-checkout.sample
+--- ./.git/hooks/push-to-checkout.sample	2022-03-25 12:32:28.689827000 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/push-to-checkout.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,78 +0,0 @@
+-#!/bin/sh
+-
+-# An example hook script to update a checked-out tree on a git push.
+-#
+-# This hook is invoked by git-receive-pack(1) when it reacts to git
+-# push and updates reference(s) in its repository, and when the push
+-# tries to update the branch that is currently checked out and the
+-# receive.denyCurrentBranch configuration variable is set to
+-# updateInstead.
+-#
+-# By default, such a push is refused if the working tree and the index
+-# of the remote repository has any difference from the currently
+-# checked out commit; when both the working tree and the index match
+-# the current commit, they are updated to match the newly pushed tip
+-# of the branch. This hook is to be used to override the default
+-# behaviour; however the code below reimplements the default behaviour
+-# as a starting point for convenient modification.
+-#
+-# The hook receives the commit with which the tip of the current
+-# branch is going to be updated:
+-commit=$1
+-
+-# It can exit with a non-zero status to refuse the push (when it does
+-# so, it must not modify the index or the working tree).
+-die () {
+-	echo >&2 "$*"
+-	exit 1
+-}
+-
+-# Or it can make any necessary changes to the working tree and to the
+-# index to bring them to the desired state when the tip of the current
+-# branch is updated to the new commit, and exit with a zero status.
+-#
+-# For example, the hook can simply run git read-tree -u -m HEAD "$1"
+-# in order to emulate git fetch that is run in the reverse direction
+-# with git push, as the two-tree form of git read-tree -u -m is
+-# essentially the same as git switch or git checkout that switches
+-# branches while keeping the local changes in the working tree that do
+-# not interfere with the difference between the branches.
+-
+-# The below is a more-or-less exact translation to shell of the C code
+-# for the default behaviour for git's push-to-checkout hook defined in
+-# the push_to_deploy() function in builtin/receive-pack.c.
+-#
+-# Note that the hook will be executed from the repository directory,
+-# not from the working tree, so if you want to perform operations on
+-# the working tree, you will have to adapt your code accordingly, e.g.
+-# by adding "cd .." or using relative paths.
+-
+-if ! git update-index -q --ignore-submodules --refresh
+-then
+-	die "Up-to-date check failed"
+-fi
+-
+-if ! git diff-files --quiet --ignore-submodules --
+-then
+-	die "Working directory has unstaged changes"
+-fi
+-
+-# This is a rough translation of:
+-#
+-#   head_has_history() ? "HEAD" : EMPTY_TREE_SHA1_HEX
+-if git cat-file -e HEAD 2>/dev/null
+-then
+-	head=HEAD
+-else
+-	head=$(git hash-object -t tree --stdin </dev/null)
+-fi
+-
+-if ! git diff-index --quiet --cached --ignore-submodules $head --
+-then
+-	die "Working directory has staged changes"
+-fi
+-
+-if ! git read-tree -u -m "$commit"
+-then
+-	die "Could not update working tree to new HEAD"
+-fi
+diff -urN ./.git/hooks/update.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/update.sample
+--- ./.git/hooks/update.sample	2022-03-25 12:32:28.689827000 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/update.sample	1969-12-31 21:00:00.000000000 -0300
+@@ -1,128 +0,0 @@
+-#!/bin/sh
+-#
+-# An example hook script to block unannotated tags from entering.
+-# Called by "git receive-pack" with arguments: refname sha1-old sha1-new
+-#
+-# To enable this hook, rename this file to "update".
+-#
+-# Config
+-# ------
+-# hooks.allowunannotated
+-#   This boolean sets whether unannotated tags will be allowed into the
+-#   repository.  By default they won't be.
+-# hooks.allowdeletetag
+-#   This boolean sets whether deleting tags will be allowed in the
+-#   repository.  By default they won't be.
+-# hooks.allowmodifytag
+-#   This boolean sets whether a tag may be modified after creation. By default
+-#   it won't be.
+-# hooks.allowdeletebranch
+-#   This boolean sets whether deleting branches will be allowed in the
+-#   repository.  By default they won't be.
+-# hooks.denycreatebranch
+-#   This boolean sets whether remotely creating branches will be denied
+-#   in the repository.  By default this is allowed.
+-#
+-
+-# --- Command line
+-refname="$1"
+-oldrev="$2"
+-newrev="$3"
+-
+-# --- Safety check
+-if [ -z "$GIT_DIR" ]; then
+-	echo "Don't run this script from the command line." >&2
+-	echo " (if you want, you could supply GIT_DIR then run" >&2
+-	echo "  $0 <ref> <oldrev> <newrev>)" >&2
+-	exit 1
+-fi
+-
+-if [ -z "$refname" -o -z "$oldrev" -o -z "$newrev" ]; then
+-	echo "usage: $0 <ref> <oldrev> <newrev>" >&2
+-	exit 1
+-fi
+-
+-# --- Config
+-allowunannotated=$(git config --type=bool hooks.allowunannotated)
+-allowdeletebranch=$(git config --type=bool hooks.allowdeletebranch)
+-denycreatebranch=$(git config --type=bool hooks.denycreatebranch)
+-allowdeletetag=$(git config --type=bool hooks.allowdeletetag)
+-allowmodifytag=$(git config --type=bool hooks.allowmodifytag)
+-
+-# check for no description
+-projectdesc=$(sed -e '1q' "$GIT_DIR/description")
+-case "$projectdesc" in
+-"Unnamed repository"* | "")
+-	echo "*** Project description file hasn't been set" >&2
+-	exit 1
+-	;;
+-esac
+-
+-# --- Check types
+-# if $newrev is 0000...0000, it's a commit to delete a ref.
+-zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+-if [ "$newrev" = "$zero" ]; then
+-	newrev_type=delete
+-else
+-	newrev_type=$(git cat-file -t $newrev)
+-fi
+-
+-case "$refname","$newrev_type" in
+-	refs/tags/*,commit)
+-		# un-annotated tag
+-		short_refname=${refname##refs/tags/}
+-		if [ "$allowunannotated" != "true" ]; then
+-			echo "*** The un-annotated tag, $short_refname, is not allowed in this repository" >&2
+-			echo "*** Use 'git tag [ -a | -s ]' for tags you want to propagate." >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/tags/*,delete)
+-		# delete tag
+-		if [ "$allowdeletetag" != "true" ]; then
+-			echo "*** Deleting a tag is not allowed in this repository" >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/tags/*,tag)
+-		# annotated tag
+-		if [ "$allowmodifytag" != "true" ] && git rev-parse $refname > /dev/null 2>&1
+-		then
+-			echo "*** Tag '$refname' already exists." >&2
+-			echo "*** Modifying a tag is not allowed in this repository." >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/heads/*,commit)
+-		# branch
+-		if [ "$oldrev" = "$zero" -a "$denycreatebranch" = "true" ]; then
+-			echo "*** Creating a branch is not allowed in this repository" >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/heads/*,delete)
+-		# delete branch
+-		if [ "$allowdeletebranch" != "true" ]; then
+-			echo "*** Deleting a branch is not allowed in this repository" >&2
+-			exit 1
+-		fi
+-		;;
+-	refs/remotes/*,commit)
+-		# tracking branch
+-		;;
+-	refs/remotes/*,delete)
+-		# delete tracking branch
+-		if [ "$allowdeletebranch" != "true" ]; then
+-			echo "*** Deleting a tracking branch is not allowed in this repository" >&2
+-			exit 1
+-		fi
+-		;;
+-	*)
+-		# Anything else (is there anything else?)
+-		echo "*** Update hook: unknown type of update to ref $refname of type $newrev_type" >&2
+-		exit 1
+-		;;
+-esac
+-
+-# --- Finished
+-exit 0
+Binary files ./.git/index and ../welcome-to-ocaml-GabrielFerreira7-main/.git/index differ
+diff -urN ./.git/info/exclude ../welcome-to-ocaml-GabrielFerreira7-main/.git/info/exclude
+--- ./.git/info/exclude	2022-03-25 12:32:28.689827000 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/info/exclude	1969-12-31 21:00:00.000000000 -0300
+@@ -1,6 +0,0 @@
+-# git ls-files --others --exclude-from=.git/info/exclude
+-# Lines that start with '#' are comments.
+-# For a project mostly in C, the following would be a good set of
+-# exclude patterns (uncomment them if you want to use them):
+-# *.[oa]
+-# *~
+diff -urN ./.git/logs/HEAD ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/HEAD
+--- ./.git/logs/HEAD	2022-03-25 21:49:07.242893300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/HEAD	1969-12-31 21:00:00.000000000 -0300
+@@ -1,3 +0,0 @@
+-0000000000000000000000000000000000000000 15255654640e7ed07ae3fa6dc036f3f7f8273770 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648222468 -0300	initial pull
+-15255654640e7ed07ae3fa6dc036f3f7f8273770 61846b9ab78463407054ae2fc542e9f940bb809a GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648253092 -0300	commit: primeira modificacao
+-61846b9ab78463407054ae2fc542e9f940bb809a 3bef6a0d0b535023a17901ba43335bf894a46c14 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648255747 -0300	commit: segunda modificacao
+diff -urN ./.git/logs/refs/heads/main ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/refs/heads/main
+--- ./.git/logs/refs/heads/main	2022-03-25 21:49:07.242893300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/refs/heads/main	1969-12-31 21:00:00.000000000 -0300
+@@ -1,3 +0,0 @@
+-0000000000000000000000000000000000000000 15255654640e7ed07ae3fa6dc036f3f7f8273770 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648222468 -0300	initial pull
+-15255654640e7ed07ae3fa6dc036f3f7f8273770 61846b9ab78463407054ae2fc542e9f940bb809a GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648253092 -0300	commit: primeira modificacao
+-61846b9ab78463407054ae2fc542e9f940bb809a 3bef6a0d0b535023a17901ba43335bf894a46c14 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648255747 -0300	commit: segunda modificacao
+diff -urN ./.git/logs/refs/remotes/origin/main ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/refs/remotes/origin/main
+--- ./.git/logs/refs/remotes/origin/main	2022-03-25 21:49:13.829924300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/refs/remotes/origin/main	1969-12-31 21:00:00.000000000 -0300
+@@ -1,3 +0,0 @@
+-0000000000000000000000000000000000000000 15255654640e7ed07ae3fa6dc036f3f7f8273770 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648222468 -0300	pull origin main: storing head
+-15255654640e7ed07ae3fa6dc036f3f7f8273770 61846b9ab78463407054ae2fc542e9f940bb809a GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648253117 -0300	update by push
+-61846b9ab78463407054ae2fc542e9f940bb809a 3bef6a0d0b535023a17901ba43335bf894a46c14 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648255753 -0300	update by push
+diff -urN ./.git/objects/09/095e73721d36cf743129881ca73db74be2fc5a ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/09/095e73721d36cf743129881ca73db74be2fc5a
+--- ./.git/objects/09/095e73721d36cf743129881ca73db74be2fc5a	2022-03-25 21:48:53.129037000 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/09/095e73721d36cf743129881ca73db74be2fc5a	1969-12-31 21:00:00.000000000 -0300
+@@ -1,2 +0,0 @@
+-x}ë=O√0Üô˝+NeIÜZ*B >6$TEés¥V¸•ÿiã™˛wl∑†62å~ﬁ˜Óﬁ;7“4ps{w±-∂∂[:x°¨È=‹…#Ïˆ∞á9!=zÖΩPıb]√ôíØåwlâßg0∫.ˇÒMıÚº†æÆg≥Tu÷'€ºñÃ£Ûöêòâ:ﬂ¢^S’=áƒkÊÖ—∞4SZL‘◊4µù◊$Ni!€mÛ2⁄ä∂É∆˙*#|
+-›J—Ñı–9‘^0ôq•q>xc3¯êN∫úfÌ∂∆≠E?eìIn‚12íıB·_úrixGç#…ëÆÿÀMœÏâ†b‹Ωø˙˝Ï£0áb(§U(-{Û¨ë¯„´é7«=πÍ¢,Àì·k«M„.*≤'ﬂoH„t
+\ No newline at end of file
+Binary files ./.git/objects/15/255654640e7ed07ae3fa6dc036f3f7f8273770 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/15/255654640e7ed07ae3fa6dc036f3f7f8273770 differ
+Binary files ./.git/objects/1c/ddc455aed936b2062c0672b9b5dd05558a9724 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/1c/ddc455aed936b2062c0672b9b5dd05558a9724 differ
+Binary files ./.git/objects/22/adc1554b2fd558746afcb49a0defb9850964b2 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/22/adc1554b2fd558746afcb49a0defb9850964b2 differ
+diff -urN ./.git/objects/26/1fb53c8466b1f87e8dd99ca2d2f2a68866c7c2 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/26/1fb53c8466b1f87e8dd99ca2d2f2a68866c7c2
+--- ./.git/objects/26/1fb53c8466b1f87e8dd99ca2d2f2a68866c7c2	2022-03-25 12:34:28.373693500 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/26/1fb53c8466b1f87e8dd99ca2d2f2a68866c7c2	1969-12-31 21:00:00.000000000 -0300
+@@ -1,3 +0,0 @@
+-xΩé±
+-√ Ñ;Á)‹CÉ˛Õ•tÌ3î*¶b,˙gË€W»⁄π7‹pwùœ)Eb`‡D%6‡
+-% q¥JÃì1àZ8£ÊQ8•ΩGîÅwvß%ˆä¥ÏÓÏW[k…9=\¶'ªh≠ë˝œ˛∂◊PÍ∞ÂﬁÎg86ÉœÈ ÑV@s≈zﬁ‘µ¥§Twﬂ"Eª≤É˘!œ\
+\ No newline at end of file
+Binary files ./.git/objects/35/dcad2250d31d9e080d9703a8578c5587005c8f and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/35/dcad2250d31d9e080d9703a8578c5587005c8f differ
+Binary files ./.git/objects/3b/ef6a0d0b535023a17901ba43335bf894a46c14 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/3b/ef6a0d0b535023a17901ba43335bf894a46c14 differ
+diff -urN ./.git/objects/40/067c860d6d97aef1946511e04616303f54a661 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/40/067c860d6d97aef1946511e04616303f54a661
+--- ./.git/objects/40/067c860d6d97aef1946511e04616303f54a661	2022-03-25 12:34:28.576816600 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/40/067c860d6d97aef1946511e04616303f54a661	1969-12-31 21:00:00.000000000 -0300
+@@ -1,2 +0,0 @@
+-xÖêAk¬@Ö=ÁW<Á¥Bä^§á)x\Ç&qHñnwm≤A¸˜ùµQlA‹”Ã0Ûﬁ˜∂≤æ¬À|1±∏ªñ≠ıPØ	fkß©™[Æ?—áŒ∏FÉ˙Úã«é†6gk™t/”¶c≤z˜≠#ŸΩÃgàÌîí‰ÊT6¸»«∏p5ëÚøá]ºÕ≥,”»Û_…ë8™˚#ª:åì ›‡F¬ù|g4ì˙∫.{≠æá“ˆ€¡H÷ªﬂ(ÙR4˛>E¬ 
+-x™Yç"˘ïtoo
+\ No newline at end of file
+Binary files ./.git/objects/42/09e9365ea798add7bd04795166aa81899ee9b5 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/42/09e9365ea798add7bd04795166aa81899ee9b5 differ
+Binary files ./.git/objects/43/33f174bbb7bc7f3107e9cdd51050654f79b2e4 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/43/33f174bbb7bc7f3107e9cdd51050654f79b2e4 differ
+Binary files ./.git/objects/55/336ad0f9bc4b95cff40619cb9e9f46c3829599 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/55/336ad0f9bc4b95cff40619cb9e9f46c3829599 differ
+Binary files ./.git/objects/61/846b9ab78463407054ae2fc542e9f940bb809a and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/61/846b9ab78463407054ae2fc542e9f940bb809a differ
+Binary files ./.git/objects/63/201e5efe8764ba27ad05b28315f91ad40913e0 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/63/201e5efe8764ba27ad05b28315f91ad40913e0 differ
+diff -urN ./.git/objects/63/557d6aa0f1f4f157d850a91dbe42602d13bcb3 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/63/557d6aa0f1f4f157d850a91dbe42602d13bcb3
+--- ./.git/objects/63/557d6aa0f1f4f157d850a91dbe42602d13bcb3	2022-03-25 21:03:32.282378100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/63/557d6aa0f1f4f157d850a91dbe42602d13bcb3	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-x-ÃA@0ÑaÎûbñ4±≥aaÌ“2JÚhRèÛ´∞ö?˘íÒ=⁄¶(-∂Cô7qÅÆƒ@ëà=Œó∂2ÊvÇêH›éÄß¶7Í˛Øœ©£Ãúˇ^Àc†k 
+\ No newline at end of file
+Binary files ./.git/objects/65/0561bdb08308b1b9c8b43e17b53bd8772cb526 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/65/0561bdb08308b1b9c8b43e17b53bd8772cb526 differ
+Binary files ./.git/objects/6d/b90a15fd39aadec9e688bfec4360f21e5ce904 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/6d/b90a15fd39aadec9e688bfec4360f21e5ce904 differ
+diff -urN ./.git/objects/86/d9c6c9cfcb1a1d39b71205dc3f65e7535508be ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/86/d9c6c9cfcb1a1d39b71205dc3f65e7535508be
+--- ./.git/objects/86/d9c6c9cfcb1a1d39b71205dc3f65e7535508be	2022-03-25 12:34:28.451820000 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/86/d9c6c9cfcb1a1d39b71205dc3f65e7535508be	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-xU Õ¬ `œ<≈óÉ&5∆_Ü,0b#°4Ì„KΩyõôol,ñ¶€˝ƒQr øf–ıÚ–J±kíYlƒQ2ötòR%ô◊±PoÎœ™∏è(‚,	¥!∫íÜ{Tdø("ñ1v,ùû€‹ﬂÁ#éq≠ª¡^·˛DÎ/ŸD2
+\ No newline at end of file
+Binary files ./.git/objects/8d/d3721cd46caaff5d1d64c3e17253f8b72414a5 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/8d/d3721cd46caaff5d1d64c3e17253f8b72414a5 differ
+diff -urN ./.git/objects/9c/2de28d8ff4ecfb9786d94895f0fffdab8a10a6 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/9c/2de28d8ff4ecfb9786d94895f0fffdab8a10a6
+--- ./.git/objects/9c/2de28d8ff4ecfb9786d94895f0fffdab8a10a6	2022-03-25 12:34:28.530175100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/9c/2de28d8ff4ecfb9786d94895f0fffdab8a10a6	1969-12-31 21:00:00.000000000 -0300
+@@ -1,2 +0,0 @@
+-x»9¿ —‘ú¬%.SÂ8–/êX,õnÈÊM™#—˜>æñ§Q∑#ﬂcµ}_ï^KGò∞iøE!:2Ãnãë»
+-XÇ<ôŸ	B
+\ No newline at end of file
+Binary files ./.git/objects/9f/e3415da62784f38fa1948a14ca317037f62577 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/9f/e3415da62784f38fa1948a14ca317037f62577 differ
+diff -urN ./.git/objects/a0/56e5e8c7bdb58570cabe27775a0cd4ebf6910e ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a0/56e5e8c7bdb58570cabe27775a0cd4ebf6910e
+--- ./.git/objects/a0/56e5e8c7bdb58570cabe27775a0cd4ebf6910e	2022-03-25 12:34:28.420894400 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a0/56e5e8c7bdb58570cabe27775a0cd4ebf6910e	1969-12-31 21:00:00.000000000 -0300
+@@ -1,3 +0,0 @@
+-x]R›k€0ﬂ≥˛ä#O-òÆÌ`îæ)∂‹à9ñëïfyÙák8V∞‰Ö˛˜;9I«£”›ÔÎT˜∂Üß«Ô/_÷\Af=8MHlO£9tÓö{x~|~ÇM*
+-X∆Ò∑ÁB
+-=çs∆`tz‘ı∆j∫ç`?jvMWçÅ∑Pp“£√[˚ f8@ÚÏÙ¬8ª˜Áj‘ÿ‹BÂúmLÖx–⁄f:Í¡W>ÌMØ‹˘N√¢ºN,ÓgíVW=1¢i∏]¡Ÿ¯ŒNFÌ¸höÄÅö~jÉÜ€uoéÊ ∆gÛé†Ú…°É†3Ç£mÕ>¸ılÎ4’Ωq]≠	–ı‰±”Ö‚úb||µ#8›˜ÍûΩ˛U7˜Ñ|0‰øF‰BÂ‹Ÿ„øNå#˚iêC¡é÷bd3„/›¯P	 ˜∂ÔÌ9XkÏ–ö‡◊Ω¢™™Ìo={πÏv∞•ŒqœòE\∂zΩr]’˜PÎk`»ãÒbÈ”∫õjÁqÒ¶Í·d«ôÔõ»øbPäTm©d¿K(§xÁ	K`AK</"ÿrµÿ!iÆv R†˘~<âÄ˝,$+KíuëqÜ5û«Ÿ&·˘,q.¯Ä9>cU·ä3úKaÕdºBd∫‰Wªà§\Â3(T*o2*°ÿ»BîÈÑÕyûJdakñ´d≈∞w<@π¢Y®›†zÙA,äù‰o++ë%ãKÜ Ë2c*4gîØ#HËöæu¢H⁄.Í`ªb°¯(~±‚"6bë+â«]Jı9∫Â%ãÄJ^Ü@R)÷	q‚¢#ŒÂÏÇ¢û˙‹∂Ñ¿6h˙¶F3ƒ¬ı‰≥≈[Û˘÷√U.
+\ No newline at end of file
+Binary files ./.git/objects/a1/8e08402bb7d142966b692999d2a104d8f4d072 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a1/8e08402bb7d142966b692999d2a104d8f4d072 differ
+Binary files ./.git/objects/a8/b51fcb320f5aceb0c350e57e95827bf4ccce48 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a8/b51fcb320f5aceb0c350e57e95827bf4ccce48 differ
+diff -urN ./.git/objects/a9/273fa72d0cd5b8d97d68d3606a869ac3316db0 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a9/273fa72d0cd5b8d97d68d3606a869ac3316db0
+--- ./.git/objects/a9/273fa72d0cd5b8d97d68d3606a869ac3316db0	2022-03-25 12:34:28.592448300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a9/273fa72d0cd5b8d97d68d3606a869ac3316db0	1969-12-31 21:00:00.000000000 -0300
+@@ -1,2 +0,0 @@
+-x=å±
+-Ñ0≠˝äáï6ÇÕ5áÿ⁄X[JÇã∑∞n$ÆE˛ﬁàp’ÉaÊy	]˜)ÑªcE_GdµÂ¥<™˘Á|"Ö+B›N™o∂û$˚à‰÷EX	u÷O∫ætJ¬æI$¥[$≤ÁVõÚÀP(o
+\ No newline at end of file
+diff -urN ./.git/objects/aa/588ce0801d2a12388fb97eb1da110f628b24e7 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/aa/588ce0801d2a12388fb97eb1da110f628b24e7
+--- ./.git/objects/aa/588ce0801d2a12388fb97eb1da110f628b24e7	2022-03-25 21:48:53.144678800 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/aa/588ce0801d2a12388fb97eb1da110f628b24e7	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-xçè=¬0Üù˚+^2ô•∫q’¡Y\Wz÷@ºHë˛{/~‹úó˜ΩÁπ6ƒÀ≈j8„J^∞ÆÄ[Úí›êıÈa ∆xO∫Ú¶—T©hâ©s¡cn·eÍ≥tÔÈ|?ﬂ÷[!÷}bŒeØX€TS¯€	Ö72%<8q¡¢çI6¥£Lˇpé⁄%›ap¬õ‡‚ŸÈqøJúı™_Æ÷ˇèK¡X´MÛ≤CW€@•´'9†eQ
+\ No newline at end of file
+Binary files ./.git/objects/ac/ce88b45c4d6e22f5508500c25be8a1e71bfa38 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/ac/ce88b45c4d6e22f5508500c25be8a1e71bfa38 differ
+Binary files ./.git/objects/bd/e81230a474b81c4d6d6fb0cb6c97e02563f64c and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/bd/e81230a474b81c4d6d6fb0cb6c97e02563f64c differ
+Binary files ./.git/objects/c1/b4521e31fd15eaf56a75cbfd0f9902783a07d6 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/c1/b4521e31fd15eaf56a75cbfd0f9902783a07d6 differ
+Binary files ./.git/objects/d0/1de1c2dd2aede0b90a92b779fc8ec22c8e2739 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/d0/1de1c2dd2aede0b90a92b779fc8ec22c8e2739 differ
+Binary files ./.git/objects/d3/7c5a80489851d48067645141e9929f78271288 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/d3/7c5a80489851d48067645141e9929f78271288 differ
+Binary files ./.git/objects/d5/fc52848ddf5c285ca668fce39c536aae8acaa6 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/d5/fc52848ddf5c285ca668fce39c536aae8acaa6 differ
+diff -urN ./.git/objects/e5/ada11cc6630a2da14cff3cb0bff9a0d791b74f ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/e5/ada11cc6630a2da14cff3cb0bff9a0d791b74f
+--- ./.git/objects/e5/ada11cc6630a2da14cff3cb0bff9a0d791b74f	2022-03-25 12:34:28.436188300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/e5/ada11cc6630a2da14cff3cb0bff9a0d791b74f	1969-12-31 21:00:00.000000000 -0300
+@@ -1,2 +0,0 @@
+-x]çK¬0DYÁŸ %Kv¿eêùz…n™|‚ÓuQCÅù˝f49°=]ŒG
+-≠2ÎF≤w‚êÑº˛SCé·ˆè%ç©|79bÜ ¨∑˜∆∏êAtd†©ÿ„„x›¶_Ô∏R©›)3®t%´∂Ôˇ“]—ª◊÷ÆE@
+\ No newline at end of file
+Binary files ./.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391 differ
+Binary files ./.git/objects/f1/204939355a41f8779961b7692f51b46cc993e0 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/f1/204939355a41f8779961b7692f51b46cc993e0 differ
+diff -urN ./.git/objects/f2/3c48d28a8d4891ea3e1f45248df59bf88d4ac0 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/f2/3c48d28a8d4891ea3e1f45248df59bf88d4ac0
+--- ./.git/objects/f2/3c48d28a8d4891ea3e1f45248df59bf88d4ac0	2022-03-25 21:03:32.266972400 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/f2/3c48d28a8d4891ea3e1f45248df59bf88d4ac0	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-x%å1¿ ;˜å∞†vË{†QDÑ~ﬂ¥],üm9QKÊ<ÆÕ¶˚⁄ç≠±Ä)KßÑï∞B C^Ê‹[ı,Üyòy∏∑˛o¥®?ü˙L-ﬂæâNwˆ&p
+\ No newline at end of file
+diff -urN ./.git/objects/fd/1f8292cd76741d938e7ff780ff9a44f0f7f7ee ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/fd/1f8292cd76741d938e7ff780ff9a44f0f7f7ee
+--- ./.git/objects/fd/1f8292cd76741d938e7ff780ff9a44f0f7f7ee	2022-03-25 21:03:32.282378100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/fd/1f8292cd76741d938e7ff780ff9a44f0f7f7ee	1969-12-31 21:00:00.000000000 -0300
+@@ -1,2 +0,0 @@
+-xuê1k√0Ö;˚WºjíLÒêN!Ñ,öBÁê%B∆WG†úÇ¨¸Ô{≤”°n	›Ω˜Óæ6ƒœÎıC†åãÛåmË˙ö<g;dπz®√Ÿe¯c¸L`w°‘F˙Ê.‚.x&h˝>ﬂ6ØBl˙DîãöçŸ†6“^2,∂H‰:;K<KeÈ•ˇäú|üœåóHè î˛5≠~õÓ∑≤ H.·Fâ Fhc‚éÚrÚ≥ZMÂ1tçDîŸ‰Ëzπ≠˙V(ú0ì≤Ò√
+-∑ü([◊ùTÍw¶ùÀŒQ™E‹D™˙∏{Ä,
+\ No newline at end of file
+diff -urN ./.git/objects/fe/4933433c158af4c0aa226d60256f299db4da55 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/fe/4933433c158af4c0aa226d60256f299db4da55
+--- ./.git/objects/fe/4933433c158af4c0aa226d60256f299db4da55	2022-03-25 12:34:28.576816600 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/fe/4933433c158af4c0aa226d60256f299db4da55	1969-12-31 21:00:00.000000000 -0300
+@@ -1,3 +0,0 @@
+-x=ç1
+-1D≠˜#XädSX-¶qEm,≈2—Y»ÊC≤≤§Û,ÕìòD∞õ?Ûfæql–n€≈Áı∆û)bòuÇ%ÁX5¿
+-3π;èÑÆÎ/áÏÏpfÎ])Ñ®‚ó^≠û0D$~x=í¬±l≠ˇ≠e¶OsÈê*<ØpÀJgG G∞{lö/Ïµ3V
+\ No newline at end of file
+diff -urN ./.git/refs/heads/main ../welcome-to-ocaml-GabrielFerreira7-main/.git/refs/heads/main
+--- ./.git/refs/heads/main	2022-03-25 21:49:07.242893300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/refs/heads/main	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-3bef6a0d0b535023a17901ba43335bf894a46c14
+diff -urN ./.git/refs/remotes/origin/main ../welcome-to-ocaml-GabrielFerreira7-main/.git/refs/remotes/origin/main
+--- ./.git/refs/remotes/origin/main	2022-03-25 21:49:13.829924300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/refs/remotes/origin/main	1969-12-31 21:00:00.000000000 -0300
+@@ -1 +0,0 @@
+-3bef6a0d0b535023a17901ba43335bf894a46c14
+diff -urN ./.github/workflows/workflow.yml ../welcome-to-ocaml-GabrielFerreira7-main/.github/workflows/workflow.yml
+--- ./.github/workflows/workflow.yml	2022-03-25 22:37:09.418972600 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.github/workflows/workflow.yml	2022-03-28 17:55:37.000000000 -0300
+@@ -1,45 +1,47 @@
+-name: Main workflow
+-
+-on:
+-  # pull_request:
+-  push:
+-
+-jobs:
+-  build:
+-    strategy:
+-      fail-fast: false
+-      matrix:
+-        os:
+-          #- macos-latest
+-          - ubuntu-latest
+-          #- windows-latest
+-        ocaml-compiler:
+-          - 4.13.x
+-
+-    runs-on: ${{ matrix.os }}
+-
+-    steps:
+-      - name: Checkout code
+-        uses: actions/checkout@v2
+-
+-      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+-        uses: ocaml/setup-ocaml@v2
+-        with:
+-          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+-
+-      - name: Install dependencies
+-        run: |
+-          opam install dune
+-          opam exec -- dune build welcome.opam
+-          opam install . --deps-only --with-test
+-
+-      - name: Build
+-        run: |
+-          opam exec -- dune build
+-
+-      - name: Test
+-        run: |
+-          opam exec -- dune runtest &> runtest.out.txt || true
+-          cat runtest.out.txt
+-          echo $(grep "^ ‚Ä¢ " runtest.out.txt | wc -l) "failures"
+-          if grep "^ ‚Ä¢ " runtest.out.txt; then false; else true; fi
++name: Main workflow
++
++on:
++  # pull_request:
++  push:
++
++jobs:
++  build:
++    strategy:
++      fail-fast: false
++      matrix:
++        os:
++          #- macos-latest
++          - ubuntu-latest
++          #- windows-latest
++        ocaml-compiler:
++          - 4.13.x
++
++    runs-on: ${{ matrix.os }}
++
++    steps:
++      - name: Checkout code
++        uses: actions/checkout@v2
++
++      - name: Use OCaml ${{ matrix.ocaml-compiler }}
++        uses: ocaml/setup-ocaml@v2
++        with:
++          ocaml-compiler: ${{ matrix.ocaml-compiler }}
++
++      - name: Install dependencies
++        run: |
++          opam install ptime
++          opam install dune
++          opam exec -- dune build welcome.opam
++          opam install . --deps-only --with-test
++
++      - name: Build
++        run: |
++          opam exec -- dune build
++
++      - name: Test
++        run: |
++          opam exec -- dune runtest &> runtest.out.txt || true
++          cat runtest.out.txt
++          echo $(grep "^ ‚Ä¢ " runtest.out.txt | wc -l) "failures"
++          if grep "^ ‚Ä¢ " runtest.out.txt; then false; else true; fi
++
+diff -urN ./.gitignore ../welcome-to-ocaml-GabrielFerreira7-main/.gitignore
+--- ./.gitignore	2022-03-25 12:34:28.748692600 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/.gitignore	2022-03-28 17:55:37.000000000 -0300
+@@ -1,29 +1,29 @@
+-*.annot
+-*.cmo
+-*.cma
+-*.cmi
+-*.a
+-*.o
+-*.cmx
+-*.cmxs
+-*.cmxa
+-
+-# ocamlbuild working directory
+-_build/
+-
+-# ocamlbuild targets
+-*.byte
+-*.native
+-
+-# oasis generated files
+-setup.data
+-setup.log
+-
+-# Merlin configuring file for Vim and Emacs
+-.merlin
+-
+-# Dune generated files
+-*.install
+-
+-# Local OPAM switch
+-_opam/
++*.annot
++*.cmo
++*.cma
++*.cmi
++*.a
++*.o
++*.cmx
++*.cmxs
++*.cmxa
++
++# ocamlbuild working directory
++_build/
++
++# ocamlbuild targets
++*.byte
++*.native
++
++# oasis generated files
++setup.data
++setup.log
++
++# Merlin configuring file for Vim and Emacs
++.merlin
++
++# Dune generated files
++*.install
++
++# Local OPAM switch
++_opam/
+diff -urN ./LICENSE ../welcome-to-ocaml-GabrielFerreira7-main/LICENSE
+--- ./LICENSE	2022-03-25 12:34:28.748692600 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/LICENSE	2022-03-28 17:55:37.000000000 -0300
+@@ -1,21 +1,21 @@
+-MIT License
+-
+-Copyright (c) 2021 UFOP BCC328
+-
+-Permission is hereby granted, free of charge, to any person obtaining a copy
+-of this software and associated documentation files (the "Software"), to deal
+-in the Software without restriction, including without limitation the rights
+-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-copies of the Software, and to permit persons to whom the Software is
+-furnished to do so, subject to the following conditions:
+-
+-The above copyright notice and this permission notice shall be included in all
+-copies or substantial portions of the Software.
+-
+-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+-SOFTWARE.
++MIT License
++
++Copyright (c) 2021 UFOP BCC328
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all
++copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
++SOFTWARE.
+diff -urN ./README.md ../welcome-to-ocaml-GabrielFerreira7-main/README.md
+--- ./README.md	2022-03-25 12:34:28.748692600 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/README.md	2022-03-28 17:55:37.000000000 -0300
+@@ -1,40 +1,40 @@
+-# Welcome
+-
+-Working with a simple OCaml project using `opam` and `dune`.
+-
+-This project implements a library and an application to greet the user with a message.
+-
+-There is a video explaining the project in the Moodle virtual classroom for the course. Watch it.
+-
+-## Exercise
+-
+-Modify the project to add a question to the user, asking his year of birth, read the answer, and then display the user age.
+-
+-You will need an aditional library to compute the age of the user, because the standard library does not have this functionality. Use the library [`ptime`](https://erratique.ch/software/ptime/doc/Ptime.html), which has platform independent support for POSIX time.
+-
+-- With the help of `opam`, install the `ptime` package in your system, if needed.
+-- Modify the `dune-project` to add a dependence on the package `ptime` to the project.
+-- Modify the `lib/dune` file to list the dependence libraries `ptime` and `ptime.clock.os` in the `library` stanza:
+-  ``` dune
+-    (libraries ptime ptime.clock.os)
+-  ```
+-- Add a function `get_age` to the module `Mylib.Hello`.
+-  - This function should returns the number of years from a given year to the current year.
+-  - Use the library [`ptime`](https://erratique.ch/software/ptime/doc/Ptime.html) to handle dates:
+-     - `Ptime_clock.now` can be used to get the current POSIX timestamp of the system.
+-     - `Ptime.to_date_time` can be used to extract the date and time of a given timestamp.
+-     - Use pattern matching to extract the year from the result of `Ptime.to_date_time`. Put something like the following code snippet *inside your `get_age` function*:
+-       ``` ocaml
+-       let get_age ... =
+-         ...
+-         let just_now = Ptime_clock.now ()
+-         let ((current_year, _, _), _) = Ptime.to_date_time just_now
+-         ...
+-       ```
+-  - Do not forget to add this new function to the interface of the module `Mylib.Hello`.
+-- Modify the application to:
+-  - ask the year of birth of the user,
+-  - read the answer, and
+-  - calculate and print the age
+-- Build and test the application.
+-- When ready, submit your solution to your private repository in github.
++# Welcome
++
++Working with a simple OCaml project using `opam` and `dune`.
++
++This project implements a library and an application to greet the user with a message.
++
++There is a video explaining the project in the Moodle virtual classroom for the course. Watch it.
++
++## Exercise
++
++Modify the project to add a question to the user, asking his year of birth, read the answer, and then display the user age.
++
++You will need an aditional library to compute the age of the user, because the standard library does not have this functionality. Use the library [`ptime`](https://erratique.ch/software/ptime/doc/Ptime.html), which has platform independent support for POSIX time.
++
++- With the help of `opam`, install the `ptime` package in your system, if needed.
++- Modify the `dune-project` to add a dependence on the package `ptime` to the project.
++- Modify the `lib/dune` file to list the dependence libraries `ptime` and `ptime.clock.os` in the `library` stanza:
++  ``` dune
++    (libraries ptime ptime.clock.os)
++  ```
++- Add a function `get_age` to the module `Mylib.Hello`.
++  - This function should returns the number of years from a given year to the current year.
++  - Use the library [`ptime`](https://erratique.ch/software/ptime/doc/Ptime.html) to handle dates:
++     - `Ptime_clock.now` can be used to get the current POSIX timestamp of the system.
++     - `Ptime.to_date_time` can be used to extract the date and time of a given timestamp.
++     - Use pattern matching to extract the year from the result of `Ptime.to_date_time`. Put something like the following code snippet *inside your `get_age` function*:
++       ``` ocaml
++       let get_age ... =
++         ...
++         let just_now = Ptime_clock.now ()
++         let ((current_year, _, _), _) = Ptime.to_date_time just_now
++         ...
++       ```
++  - Do not forget to add this new function to the interface of the module `Mylib.Hello`.
++- Modify the application to:
++  - ask the year of birth of the user,
++  - read the answer, and
++  - calculate and print the age
++- Build and test the application.
++- When ready, submit your solution to your private repository in github.
+diff -urN ./correct.sh ../welcome-to-ocaml-GabrielFerreira7-main/correct.sh
+--- ./correct.sh	2022-03-25 12:34:28.764313500 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/correct.sh	2022-03-28 17:55:37.000000000 -0300
+@@ -1,8 +1,8 @@
+-#! /bin/sh
+-
+-dune runtest &> runtest.out.txt
+-echo =============================================
+-cat runtest.out.txt
+-echo =============================================
+-echo $(grep "^ ‚Ä¢ " runtest.out.txt | wc -l) "failures"
+-if grep "^ ‚Ä¢ " runtest.out.txt; then false; else true; fi
++#! /bin/sh
++
++dune runtest &> runtest.out.txt
++echo =============================================
++cat runtest.out.txt
++echo =============================================
++echo $(grep "^ ‚Ä¢ " runtest.out.txt | wc -l) "failures"
++if grep "^ ‚Ä¢ " runtest.out.txt; then false; else true; fi
+diff -urN ./dune ../welcome-to-ocaml-GabrielFerreira7-main/dune
+--- ./dune	2022-03-25 12:34:28.764313500 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/dune	2022-03-28 17:55:37.000000000 -0300
+@@ -1,13 +1,13 @@
+-(executable
+- (name welcome)
+- (public_name welcome)
+- (modules welcome)
+- (libraries mylib))
+-
+-(cram
+- (deps %{bin:welcome}))
+-
+-(test
+- (name myalcotest)
+- (modules myalcotest)
+- (libraries alcotest mylib))
++(executable
++ (name welcome)
++ (public_name welcome)
++ (modules welcome)
++ (libraries mylib))
++
++(cram
++ (deps %{bin:welcome}))
++
++(test
++ (name myalcotest)
++ (modules myalcotest)
++ (libraries alcotest mylib))
+diff -urN ./dune-project ../welcome-to-ocaml-GabrielFerreira7-main/dune-project
+--- ./dune-project	2022-03-25 12:34:28.764313500 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/dune-project	2022-03-28 17:55:37.000000000 -0300
+@@ -1,11 +1,11 @@
+-(lang dune 2.8)
+-
+-(cram enable)
+-
+-(generate_opam_files true)
+-
+-(package
+- (name welcome)
+- (depends
+-  (alcotest :with-test)
++(lang dune 2.8)
++
++(cram enable)
++
++(generate_opam_files true)
++
++(package
++ (name welcome)
++ (depends
++  (alcotest :with-test)
+   (ppx_expect :with-test)))
+\ No newline at end of file
+diff -urN ./lib/dune ../welcome-to-ocaml-GabrielFerreira7-main/lib/dune
+--- ./lib/dune	2022-03-28 18:00:14.934570300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/lib/dune	2022-03-28 17:55:37.000000000 -0300
+@@ -1,5 +1,5 @@
+-(library
+- (name mylib)
+- (libraries ptime ptime.clock.os)
+- (inline_tests)
+- (preprocess (pps ppx_expect)))
++(library
++ (name mylib)
++ (inline_tests)
++ (preprocess (pps ppx_expect))
++ (libraries ptime ptime.clock.os))
+diff -urN ./lib/hello.ml ../welcome-to-ocaml-GabrielFerreira7-main/lib/hello.ml
+--- ./lib/hello.ml	2022-03-25 20:13:09.812948700 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/lib/hello.ml	2022-03-28 17:55:37.000000000 -0300
+@@ -1,12 +1,12 @@
+-(* implementation of the Hello module *)
+-let hello = "Hello"
+-
+-let greeting name =
+-  hello ^ ", " ^ name ^ "!"
+-
+-let just_now = Ptime_clock.now ()
+-
+-let ((current_year, _, _), _) = Ptime.to_date_time just_now
+-
+-let get_age  birth_date =
++(* implementation of the Hello module *)
++let hello = "Hello"
++
++let greeting name =
++  hello ^ ", " ^ name ^ "!"
++
++let just_now = Ptime_clock.now ()
++
++let ((current_year, _, _), _) = Ptime.to_date_time just_now
++
++let get_age  birth_date =
+   current_year - birth_date
+\ No newline at end of file
+diff -urN ./lib/hello.mli ../welcome-to-ocaml-GabrielFerreira7-main/lib/hello.mli
+--- ./lib/hello.mli	2022-03-25 19:12:51.832361100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/lib/hello.mli	2022-03-28 17:55:37.000000000 -0300
+@@ -1,4 +1,4 @@
+-(* interface of the Hello module *)
+-
+-val greeting : string -> string
+-val get_age : int -> int
++(* interface of the Hello module *)
++
++val greeting : string -> string
++val get_age : int -> int
+diff -urN ./lib/test.ml ../welcome-to-ocaml-GabrielFerreira7-main/lib/test.ml
+--- ./lib/test.ml	2022-03-25 20:29:01.900168300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/lib/test.ml	2022-03-28 17:55:37.000000000 -0300
+@@ -1,13 +1,13 @@
+-(* inline expectation test for he library *)
+-
+-let%expect_test "greeting" =
+-  print_string (Hello.greeting "world");
+-  [%expect{|
+-    Hello, world!
+-  |}]
+-
+-let%expect_test "age" =
+-  print_int (Hello.get_age 2000);
+-  [%expect{|
+-    22
+-  |}]
++(* inline expectation test for he library *)
++
++let%expect_test "greeting" =
++  print_string (Hello.greeting "world");
++  [%expect{|
++    Hello, world!
++  |}]
++
++let%expect_test "age" =
++  print_int (Hello.get_age 2000);
++  [%expect{|
++    22
++  |}]
+diff -urN ./myalcotest.ml ../welcome-to-ocaml-GabrielFerreira7-main/myalcotest.ml
+--- ./myalcotest.ml	2022-03-25 16:01:50.972159100 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/myalcotest.ml	2022-03-28 17:55:37.000000000 -0300
+@@ -1,10 +1,10 @@
+-let test_hello () =
+-  Alcotest.(check string) "same string" (Mylib.Hello.greeting "John") "Hello, John!"
+-
+-let test_age () =
+-  Alcotest.(check int) "same int" (Mylib.Hello.get_age 2000) 22
+-
+-let () =
+-  let open Alcotest in
+-  run "Hello" [ ("world", [ test_case "Equal" `Quick test_hello ]);
+-                ("age",   [ test_case "Equal" `Quick test_age ]) ]
++let test_hello () =
++  Alcotest.(check string) "same string" (Mylib.Hello.greeting "John") "Hello, John!"
++
++let test_age () =
++  Alcotest.(check int) "same int" (Mylib.Hello.get_age 2000) 22
++
++let () =
++  let open Alcotest in
++  run "Hello" [ ("world", [ test_case "Equal" `Quick test_hello ]);
++                ("age",   [ test_case "Equal" `Quick test_age ]) ]
+diff -urN ./mycramtest.t ../welcome-to-ocaml-GabrielFerreira7-main/mycramtest.t
+--- ./mycramtest.t	2022-03-25 16:01:37.875982300 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/mycramtest.t	2022-03-28 17:55:37.000000000 -0300
+@@ -1,7 +1,7 @@
+-‚Ä¢ Does it say hello?
+-  $ welcome <<EOF
+-  > John Doe
+-  > 2000
+-  > EOF
+-  What is your name? Hello, John Doe!
+-  In what year were you born? You are 22 years old.
++‚Ä¢ Does it say hello?
++  $ welcome <<EOF
++  > John Doe
++  > 2000
++  > EOF
++  What is your name? Hello, John Doe!
++  In what year were you born? You are 22 years old.
+diff -urN ./shell.nix ../welcome-to-ocaml-GabrielFerreira7-main/shell.nix
+--- ./shell.nix	2022-03-25 21:42:36.971961200 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/shell.nix	2022-03-28 17:55:37.000000000 -0300
+@@ -1,31 +1,31 @@
+-{ nixpkgs ? import <nixpkgs> {} } :
+-
+-let
+-  inherit (nixpkgs) pkgs;
+-  ocamlPackages = pkgs.ocamlPackages;
+-  # ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_11;
+-  #ocamlPackages = pkgs.ocamlPackages_latest;
+-in
+-
+-pkgs.stdenv.mkDerivation {
+-  name = "my-ocaml-env";
+-  buildInputs = [
+-    ocamlPackages.dune_2
+-    ocamlPackages.findlib # essential
+-    ocamlPackages.ocaml
+-    ocamlPackages.utop
+-    ocamlPackages.ocaml-lsp
+-    ocamlPackages.ppx_expect
+-    ocamlPackages.alcotest
+-    ocamlPackages.ptime
+-    ocamlPackages.ptime.clock.os
+-
+-    pkgs.rlwrap
+-
+-    (pkgs.emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
+-      ocamlPackages.dune_2
+-    ])))
+-
+-    pkgs.vscode
+-  ];
+-}
++{ nixpkgs ? import <nixpkgs> {} } :
++
++let
++  inherit (nixpkgs) pkgs;
++  ocamlPackages = pkgs.ocamlPackages;
++  # ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_11;
++  #ocamlPackages = pkgs.ocamlPackages_latest;
++in
++
++pkgs.stdenv.mkDerivation {
++  name = "my-ocaml-env";
++  buildInputs = [
++    ocamlPackages.dune_2
++    ocamlPackages.findlib # essential
++    ocamlPackages.ocaml
++    ocamlPackages.utop
++    ocamlPackages.ocaml-lsp
++    ocamlPackages.ppx_expect
++    ocamlPackages.alcotest
++    ocamlPackages.ptime
++  
++
++    pkgs.rlwrap
++
++    (pkgs.emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
++      ocamlPackages.dune_2
++    ])))
++
++    pkgs.vscode
++  ];
++}
+diff -urN ./teste.patch ../welcome-to-ocaml-GabrielFerreira7-main/teste.patch
+--- ./teste.patch	2022-03-28 20:44:46.143861200 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/teste.patch	1969-12-31 21:00:00.000000000 -0300
+@@ -1,1591 +0,0 @@
+-diff -urN ./.git/COMMIT_EDITMSG ../welcome-to-ocaml-GabrielFerreira7-main/.git/COMMIT_EDITMSG
+---- ./.git/COMMIT_EDITMSG	2022-03-25 21:49:07.161255400 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/COMMIT_EDITMSG	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--segunda modificacao
+-diff -urN ./.git/FETCH_HEAD ../welcome-to-ocaml-GabrielFerreira7-main/.git/FETCH_HEAD
+---- ./.git/FETCH_HEAD	2022-03-25 12:34:28.654937300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/FETCH_HEAD	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--15255654640e7ed07ae3fa6dc036f3f7f8273770		branch 'main' of https://github.com/ufop-bcc328/welcome-to-ocaml-GabrielFerreira7
+-diff -urN ./.git/HEAD ../welcome-to-ocaml-GabrielFerreira7-main/.git/HEAD
+---- ./.git/HEAD	2022-03-25 12:33:20.575906100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/HEAD	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--ref: refs/heads/main
+-diff -urN ./.git/config ../welcome-to-ocaml-GabrielFerreira7-main/.git/config
+---- ./.git/config	2022-03-25 21:49:13.829924300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/config	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,13 +0,0 @@
+--[core]
+--	repositoryformatversion = 0
+--	filemode = false
+--	bare = false
+--	logallrefupdates = true
+--	symlinks = false
+--	ignorecase = true
+--[remote "origin"]
+--	url = https://github.com/ufop-bcc328/welcome-to-ocaml-GabrielFerreira7.git
+--	fetch = +refs/heads/*:refs/remotes/origin/*
+--[branch "main"]
+--	remote = origin
+--	merge = refs/heads/main
+-diff -urN ./.git/description ../welcome-to-ocaml-GabrielFerreira7-main/.git/description
+---- ./.git/description	2022-03-25 12:32:28.549194200 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/description	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--Unnamed repository; edit this file 'description' to name the repository.
+-diff -urN ./.git/hooks/applypatch-msg.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/applypatch-msg.sample
+---- ./.git/hooks/applypatch-msg.sample	2022-03-25 12:32:28.549194200 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/applypatch-msg.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,15 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to check the commit log message taken by
+--# applypatch from an e-mail message.
+--#
+--# The hook should exit with non-zero status after issuing an
+--# appropriate message if it wants to stop the commit.  The hook is
+--# allowed to edit the commit message file.
+--#
+--# To enable this hook, rename this file to "applypatch-msg".
+--
+--. git-sh-setup
+--commitmsg="$(git rev-parse --git-path hooks/commit-msg)"
+--test -x "$commitmsg" && exec "$commitmsg" ${1+"$@"}
+--:
+-diff -urN ./.git/hooks/commit-msg.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/commit-msg.sample
+---- ./.git/hooks/commit-msg.sample	2022-03-25 12:32:28.549194200 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/commit-msg.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,24 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to check the commit log message.
+--# Called by "git commit" with one argument, the name of the file
+--# that has the commit message.  The hook should exit with non-zero
+--# status after issuing an appropriate message if it wants to stop the
+--# commit.  The hook is allowed to edit the commit message file.
+--#
+--# To enable this hook, rename this file to "commit-msg".
+--
+--# Uncomment the below to add a Signed-off-by line to the message.
+--# Doing this in a hook is a bad idea in general, but the prepare-commit-msg
+--# hook is more suited to it.
+--#
+--# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+--# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
+--
+--# This example catches duplicate Signed-off-by lines.
+--
+--test "" = "$(grep '^Signed-off-by: ' "$1" |
+--	 sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
+--	echo >&2 Duplicate Signed-off-by lines.
+--	exit 1
+--}
+-diff -urN ./.git/hooks/fsmonitor-watchman.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/fsmonitor-watchman.sample
+---- ./.git/hooks/fsmonitor-watchman.sample	2022-03-25 12:32:28.549194200 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/fsmonitor-watchman.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,173 +0,0 @@
+--#!/usr/bin/perl
+--
+--use strict;
+--use warnings;
+--use IPC::Open2;
+--
+--# An example hook script to integrate Watchman
+--# (https://facebook.github.io/watchman/) with git to speed up detecting
+--# new and modified files.
+--#
+--# The hook is passed a version (currently 2) and last update token
+--# formatted as a string and outputs to stdout a new update token and
+--# all files that have been modified since the update token. Paths must
+--# be relative to the root of the working tree and separated by a single NUL.
+--#
+--# To enable this hook, rename this file to "query-watchman" and set
+--# 'git config core.fsmonitor .git/hooks/query-watchman'
+--#
+--my ($version, $last_update_token) = @ARGV;
+--
+--# Uncomment for debugging
+--# print STDERR "$0 $version $last_update_token\n";
+--
+--# Check the hook interface version
+--if ($version ne 2) {
+--	die "Unsupported query-fsmonitor hook version '$version'.\n" .
+--	    "Falling back to scanning...\n";
+--}
+--
+--my $git_work_tree = get_working_dir();
+--
+--my $retry = 1;
+--
+--my $json_pkg;
+--eval {
+--	require JSON::XS;
+--	$json_pkg = "JSON::XS";
+--	1;
+--} or do {
+--	require JSON::PP;
+--	$json_pkg = "JSON::PP";
+--};
+--
+--launch_watchman();
+--
+--sub launch_watchman {
+--	my $o = watchman_query();
+--	if (is_work_tree_watched($o)) {
+--		output_result($o->{clock}, @{$o->{files}});
+--	}
+--}
+--
+--sub output_result {
+--	my ($clockid, @files) = @_;
+--
+--	# Uncomment for debugging watchman output
+--	# open (my $fh, ">", ".git/watchman-output.out");
+--	# binmode $fh, ":utf8";
+--	# print $fh "$clockid\n@files\n";
+--	# close $fh;
+--
+--	binmode STDOUT, ":utf8";
+--	print $clockid;
+--	print "\0";
+--	local $, = "\0";
+--	print @files;
+--}
+--
+--sub watchman_clock {
+--	my $response = qx/watchman clock "$git_work_tree"/;
+--	die "Failed to get clock id on '$git_work_tree'.\n" .
+--		"Falling back to scanning...\n" if $? != 0;
+--
+--	return $json_pkg->new->utf8->decode($response);
+--}
+--
+--sub watchman_query {
+--	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+--	or die "open2() failed: $!\n" .
+--	"Falling back to scanning...\n";
+--
+--	# In the query expression below we're asking for names of files that
+--	# changed since $last_update_token but not from the .git folder.
+--	#
+--	# To accomplish this, we're using the "since" generator to use the
+--	# recency index to select candidate nodes and "fields" to limit the
+--	# output to file names only. Then we're using the "expression" term to
+--	# further constrain the results.
+--	if (substr($last_update_token, 0, 1) eq "c") {
+--		$last_update_token = "\"$last_update_token\"";
+--	}
+--	my $query = <<"	END";
+--		["query", "$git_work_tree", {
+--			"since": $last_update_token,
+--			"fields": ["name"],
+--			"expression": ["not", ["dirname", ".git"]]
+--		}]
+--	END
+--
+--	# Uncomment for debugging the watchman query
+--	# open (my $fh, ">", ".git/watchman-query.json");
+--	# print $fh $query;
+--	# close $fh;
+--
+--	print CHLD_IN $query;
+--	close CHLD_IN;
+--	my $response = do {local $/; <CHLD_OUT>};
+--
+--	# Uncomment for debugging the watch response
+--	# open ($fh, ">", ".git/watchman-response.json");
+--	# print $fh $response;
+--	# close $fh;
+--
+--	die "Watchman: command returned no output.\n" .
+--	"Falling back to scanning...\n" if $response eq "";
+--	die "Watchman: command returned invalid output: $response\n" .
+--	"Falling back to scanning...\n" unless $response =~ /^\{/;
+--
+--	return $json_pkg->new->utf8->decode($response);
+--}
+--
+--sub is_work_tree_watched {
+--	my ($output) = @_;
+--	my $error = $output->{error};
+--	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
+--		$retry--;
+--		my $response = qx/watchman watch "$git_work_tree"/;
+--		die "Failed to make watchman watch '$git_work_tree'.\n" .
+--		    "Falling back to scanning...\n" if $? != 0;
+--		$output = $json_pkg->new->utf8->decode($response);
+--		$error = $output->{error};
+--		die "Watchman: $error.\n" .
+--		"Falling back to scanning...\n" if $error;
+--
+--		# Uncomment for debugging watchman output
+--		# open (my $fh, ">", ".git/watchman-output.out");
+--		# close $fh;
+--
+--		# Watchman will always return all files on the first query so
+--		# return the fast "everything is dirty" flag to git and do the
+--		# Watchman query just to get it over with now so we won't pay
+--		# the cost in git to look up each individual file.
+--		my $o = watchman_clock();
+--		$error = $output->{error};
+--
+--		die "Watchman: $error.\n" .
+--		"Falling back to scanning...\n" if $error;
+--
+--		output_result($o->{clock}, ("/"));
+--		$last_update_token = $o->{clock};
+--
+--		eval { launch_watchman() };
+--		return 0;
+--	}
+--
+--	die "Watchman: $error.\n" .
+--	"Falling back to scanning...\n" if $error;
+--
+--	return 1;
+--}
+--
+--sub get_working_dir {
+--	my $working_dir;
+--	if ($^O =~ 'msys' || $^O =~ 'cygwin') {
+--		$working_dir = Win32::GetCwd();
+--		$working_dir =~ tr/\\/\//;
+--	} else {
+--		require Cwd;
+--		$working_dir = Cwd::cwd();
+--	}
+--
+--	return $working_dir;
+--}
+-diff -urN ./.git/hooks/post-update.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/post-update.sample
+---- ./.git/hooks/post-update.sample	2022-03-25 12:32:28.643163200 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/post-update.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,8 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to prepare a packed repository for use over
+--# dumb transports.
+--#
+--# To enable this hook, rename this file to "post-update".
+--
+--exec git update-server-info
+-diff -urN ./.git/hooks/pre-applypatch.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-applypatch.sample
+---- ./.git/hooks/pre-applypatch.sample	2022-03-25 12:32:28.643163200 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-applypatch.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,14 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to verify what is about to be committed
+--# by applypatch from an e-mail message.
+--#
+--# The hook should exit with non-zero status after issuing an
+--# appropriate message if it wants to stop the commit.
+--#
+--# To enable this hook, rename this file to "pre-applypatch".
+--
+--. git-sh-setup
+--precommit="$(git rev-parse --git-path hooks/pre-commit)"
+--test -x "$precommit" && exec "$precommit" ${1+"$@"}
+--:
+-diff -urN ./.git/hooks/pre-commit.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-commit.sample
+---- ./.git/hooks/pre-commit.sample	2022-03-25 12:32:28.658619100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-commit.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,49 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to verify what is about to be committed.
+--# Called by "git commit" with no arguments.  The hook should
+--# exit with non-zero status after issuing an appropriate message if
+--# it wants to stop the commit.
+--#
+--# To enable this hook, rename this file to "pre-commit".
+--
+--if git rev-parse --verify HEAD >/dev/null 2>&1
+--then
+--	against=HEAD
+--else
+--	# Initial commit: diff against an empty tree object
+--	against=$(git hash-object -t tree /dev/null)
+--fi
+--
+--# If you want to allow non-ASCII filenames set this variable to true.
+--allownonascii=$(git config --type=bool hooks.allownonascii)
+--
+--# Redirect output to stderr.
+--exec 1>&2
+--
+--# Cross platform projects tend to avoid non-ASCII filenames; prevent
+--# them from being added to the repository. We exploit the fact that the
+--# printable range starts at the space character and ends with tilde.
+--if [ "$allownonascii" != "true" ] &&
+--	# Note that the use of brackets around a tr range is ok here, (it's
+--	# even required, for portability to Solaris 10's /usr/bin/tr), since
+--	# the square bracket bytes happen to fall in the designated range.
+--	test $(git diff --cached --name-only --diff-filter=A -z $against |
+--	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+--then
+--	cat <<\EOF
+--Error: Attempt to add a non-ASCII file name.
+--
+--This can cause problems if you want to work with people on other platforms.
+--
+--To be portable it is advisable to rename the file.
+--
+--If you know what you are doing you can disable this check using:
+--
+--  git config hooks.allownonascii true
+--EOF
+--	exit 1
+--fi
+--
+--# If there are whitespace errors, print the offending file names and fail.
+--exec git diff-index --check --cached $against --
+-diff -urN ./.git/hooks/pre-merge-commit.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-merge-commit.sample
+---- ./.git/hooks/pre-merge-commit.sample	2022-03-25 12:32:28.674385100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-merge-commit.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,13 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to verify what is about to be committed.
+--# Called by "git merge" with no arguments.  The hook should
+--# exit with non-zero status after issuing an appropriate message to
+--# stderr if it wants to stop the merge commit.
+--#
+--# To enable this hook, rename this file to "pre-merge-commit".
+--
+--. git-sh-setup
+--test -x "$GIT_DIR/hooks/pre-commit" &&
+--        exec "$GIT_DIR/hooks/pre-commit"
+--:
+-diff -urN ./.git/hooks/pre-push.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-push.sample
+---- ./.git/hooks/pre-push.sample	2022-03-25 12:32:28.674385100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-push.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,53 +0,0 @@
+--#!/bin/sh
+--
+--# An example hook script to verify what is about to be pushed.  Called by "git
+--# push" after it has checked the remote status, but before anything has been
+--# pushed.  If this script exits with a non-zero status nothing will be pushed.
+--#
+--# This hook is called with the following parameters:
+--#
+--# $1 -- Name of the remote to which the push is being done
+--# $2 -- URL to which the push is being done
+--#
+--# If pushing without using a named remote those arguments will be equal.
+--#
+--# Information about the commits which are being pushed is supplied as lines to
+--# the standard input in the form:
+--#
+--#   <local ref> <local oid> <remote ref> <remote oid>
+--#
+--# This sample shows how to prevent push of commits where the log message starts
+--# with "WIP" (work in progress).
+--
+--remote="$1"
+--url="$2"
+--
+--zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+--
+--while read local_ref local_oid remote_ref remote_oid
+--do
+--	if test "$local_oid" = "$zero"
+--	then
+--		# Handle delete
+--		:
+--	else
+--		if test "$remote_oid" = "$zero"
+--		then
+--			# New branch, examine all commits
+--			range="$local_oid"
+--		else
+--			# Update to existing branch, examine new commits
+--			range="$remote_oid..$local_oid"
+--		fi
+--
+--		# Check for WIP commit
+--		commit=$(git rev-list -n 1 --grep '^WIP' "$range")
+--		if test -n "$commit"
+--		then
+--			echo >&2 "Found WIP commit in $local_ref, not pushing"
+--			exit 1
+--		fi
+--	fi
+--done
+--
+--exit 0
+-diff -urN ./.git/hooks/pre-rebase.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-rebase.sample
+---- ./.git/hooks/pre-rebase.sample	2022-03-25 12:32:28.674385100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-rebase.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,169 +0,0 @@
+--#!/bin/sh
+--#
+--# Copyright (c) 2006, 2008 Junio C Hamano
+--#
+--# The "pre-rebase" hook is run just before "git rebase" starts doing
+--# its job, and can prevent the command from running by exiting with
+--# non-zero status.
+--#
+--# The hook is called with the following parameters:
+--#
+--# $1 -- the upstream the series was forked from.
+--# $2 -- the branch being rebased (or empty when rebasing the current branch).
+--#
+--# This sample shows how to prevent topic branches that are already
+--# merged to 'next' branch from getting rebased, because allowing it
+--# would result in rebasing already published history.
+--
+--publish=next
+--basebranch="$1"
+--if test "$#" = 2
+--then
+--	topic="refs/heads/$2"
+--else
+--	topic=`git symbolic-ref HEAD` ||
+--	exit 0 ;# we do not interrupt rebasing detached HEAD
+--fi
+--
+--case "$topic" in
+--refs/heads/??/*)
+--	;;
+--*)
+--	exit 0 ;# we do not interrupt others.
+--	;;
+--esac
+--
+--# Now we are dealing with a topic branch being rebased
+--# on top of master.  Is it OK to rebase it?
+--
+--# Does the topic really exist?
+--git show-ref -q "$topic" || {
+--	echo >&2 "No such branch $topic"
+--	exit 1
+--}
+--
+--# Is topic fully merged to master?
+--not_in_master=`git rev-list --pretty=oneline ^master "$topic"`
+--if test -z "$not_in_master"
+--then
+--	echo >&2 "$topic is fully merged to master; better remove it."
+--	exit 1 ;# we could allow it, but there is no point.
+--fi
+--
+--# Is topic ever merged to next?  If so you should not be rebasing it.
+--only_next_1=`git rev-list ^master "^$topic" ${publish} | sort`
+--only_next_2=`git rev-list ^master           ${publish} | sort`
+--if test "$only_next_1" = "$only_next_2"
+--then
+--	not_in_topic=`git rev-list "^$topic" master`
+--	if test -z "$not_in_topic"
+--	then
+--		echo >&2 "$topic is already up to date with master"
+--		exit 1 ;# we could allow it, but there is no point.
+--	else
+--		exit 0
+--	fi
+--else
+--	not_in_next=`git rev-list --pretty=oneline ^${publish} "$topic"`
+--	/usr/bin/perl -e '
+--		my $topic = $ARGV[0];
+--		my $msg = "* $topic has commits already merged to public branch:\n";
+--		my (%not_in_next) = map {
+--			/^([0-9a-f]+) /;
+--			($1 => 1);
+--		} split(/\n/, $ARGV[1]);
+--		for my $elem (map {
+--				/^([0-9a-f]+) (.*)$/;
+--				[$1 => $2];
+--			} split(/\n/, $ARGV[2])) {
+--			if (!exists $not_in_next{$elem->[0]}) {
+--				if ($msg) {
+--					print STDERR $msg;
+--					undef $msg;
+--				}
+--				print STDERR " $elem->[1]\n";
+--			}
+--		}
+--	' "$topic" "$not_in_next" "$not_in_master"
+--	exit 1
+--fi
+--
+--<<\DOC_END
+--
+--This sample hook safeguards topic branches that have been
+--published from being rewound.
+--
+--The workflow assumed here is:
+--
+-- * Once a topic branch forks from "master", "master" is never
+--   merged into it again (either directly or indirectly).
+--
+-- * Once a topic branch is fully cooked and merged into "master",
+--   it is deleted.  If you need to build on top of it to correct
+--   earlier mistakes, a new topic branch is created by forking at
+--   the tip of the "master".  This is not strictly necessary, but
+--   it makes it easier to keep your history simple.
+--
+-- * Whenever you need to test or publish your changes to topic
+--   branches, merge them into "next" branch.
+--
+--The script, being an example, hardcodes the publish branch name
+--to be "next", but it is trivial to make it configurable via
+--$GIT_DIR/config mechanism.
+--
+--With this workflow, you would want to know:
+--
+--(1) ... if a topic branch has ever been merged to "next".  Young
+--    topic branches can have stupid mistakes you would rather
+--    clean up before publishing, and things that have not been
+--    merged into other branches can be easily rebased without
+--    affecting other people.  But once it is published, you would
+--    not want to rewind it.
+--
+--(2) ... if a topic branch has been fully merged to "master".
+--    Then you can delete it.  More importantly, you should not
+--    build on top of it -- other people may already want to
+--    change things related to the topic as patches against your
+--    "master", so if you need further changes, it is better to
+--    fork the topic (perhaps with the same name) afresh from the
+--    tip of "master".
+--
+--Let's look at this example:
+--
+--		   o---o---o---o---o---o---o---o---o---o "next"
+--		  /       /           /           /
+--		 /   a---a---b A     /           /
+--		/   /               /           /
+--	       /   /   c---c---c---c B         /
+--	      /   /   /             \         /
+--	     /   /   /   b---b C     \       /
+--	    /   /   /   /             \     /
+--    ---o---o---o---o---o---o---o---o---o---o---o "master"
+--
+--
+--A, B and C are topic branches.
+--
+-- * A has one fix since it was merged up to "next".
+--
+-- * B has finished.  It has been fully merged up to "master" and "next",
+--   and is ready to be deleted.
+--
+-- * C has not merged to "next" at all.
+--
+--We would want to allow C to be rebased, refuse A, and encourage
+--B to be deleted.
+--
+--To compute (1):
+--
+--	git rev-list ^master ^topic next
+--	git rev-list ^master        next
+--
+--	if these match, topic has not merged in next at all.
+--
+--To compute (2):
+--
+--	git rev-list master..topic
+--
+--	if this is empty, it is fully merged to "master".
+--
+--DOC_END
+-diff -urN ./.git/hooks/pre-receive.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-receive.sample
+---- ./.git/hooks/pre-receive.sample	2022-03-25 12:32:28.674385100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/pre-receive.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,24 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to make use of push options.
+--# The example simply echoes all push options that start with 'echoback='
+--# and rejects all pushes when the "reject" push option is used.
+--#
+--# To enable this hook, rename this file to "pre-receive".
+--
+--if test -n "$GIT_PUSH_OPTION_COUNT"
+--then
+--	i=0
+--	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"
+--	do
+--		eval "value=\$GIT_PUSH_OPTION_$i"
+--		case "$value" in
+--		echoback=*)
+--			echo "echo from the pre-receive-hook: ${value#*=}" >&2
+--			;;
+--		reject)
+--			exit 1
+--		esac
+--		i=$((i + 1))
+--	done
+--fi
+-diff -urN ./.git/hooks/prepare-commit-msg.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/prepare-commit-msg.sample
+---- ./.git/hooks/prepare-commit-msg.sample	2022-03-25 12:32:28.674385100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/prepare-commit-msg.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,42 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to prepare the commit log message.
+--# Called by "git commit" with the name of the file that has the
+--# commit message, followed by the description of the commit
+--# message's source.  The hook's purpose is to edit the commit
+--# message file.  If the hook fails with a non-zero status,
+--# the commit is aborted.
+--#
+--# To enable this hook, rename this file to "prepare-commit-msg".
+--
+--# This hook includes three examples. The first one removes the
+--# "# Please enter the commit message..." help message.
+--#
+--# The second includes the output of "git diff --name-status -r"
+--# into the message, just before the "git status" output.  It is
+--# commented because it doesn't cope with --amend or with squashed
+--# commits.
+--#
+--# The third example adds a Signed-off-by line to the message, that can
+--# still be edited.  This is rarely a good idea.
+--
+--COMMIT_MSG_FILE=$1
+--COMMIT_SOURCE=$2
+--SHA1=$3
+--
+--/usr/bin/perl -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"
+--
+--# case "$COMMIT_SOURCE,$SHA1" in
+--#  ,|template,)
+--#    /usr/bin/perl -i.bak -pe '
+--#       print "\n" . `git diff --cached --name-status -r`
+--# 	 if /^#/ && $first++ == 0' "$COMMIT_MSG_FILE" ;;
+--#  *) ;;
+--# esac
+--
+--# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+--# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
+--# if test -z "$COMMIT_SOURCE"
+--# then
+--#   /usr/bin/perl -i.bak -pe 'print "\n" if !$first_line++' "$COMMIT_MSG_FILE"
+--# fi
+-diff -urN ./.git/hooks/push-to-checkout.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/push-to-checkout.sample
+---- ./.git/hooks/push-to-checkout.sample	2022-03-25 12:32:28.689827000 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/push-to-checkout.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,78 +0,0 @@
+--#!/bin/sh
+--
+--# An example hook script to update a checked-out tree on a git push.
+--#
+--# This hook is invoked by git-receive-pack(1) when it reacts to git
+--# push and updates reference(s) in its repository, and when the push
+--# tries to update the branch that is currently checked out and the
+--# receive.denyCurrentBranch configuration variable is set to
+--# updateInstead.
+--#
+--# By default, such a push is refused if the working tree and the index
+--# of the remote repository has any difference from the currently
+--# checked out commit; when both the working tree and the index match
+--# the current commit, they are updated to match the newly pushed tip
+--# of the branch. This hook is to be used to override the default
+--# behaviour; however the code below reimplements the default behaviour
+--# as a starting point for convenient modification.
+--#
+--# The hook receives the commit with which the tip of the current
+--# branch is going to be updated:
+--commit=$1
+--
+--# It can exit with a non-zero status to refuse the push (when it does
+--# so, it must not modify the index or the working tree).
+--die () {
+--	echo >&2 "$*"
+--	exit 1
+--}
+--
+--# Or it can make any necessary changes to the working tree and to the
+--# index to bring them to the desired state when the tip of the current
+--# branch is updated to the new commit, and exit with a zero status.
+--#
+--# For example, the hook can simply run git read-tree -u -m HEAD "$1"
+--# in order to emulate git fetch that is run in the reverse direction
+--# with git push, as the two-tree form of git read-tree -u -m is
+--# essentially the same as git switch or git checkout that switches
+--# branches while keeping the local changes in the working tree that do
+--# not interfere with the difference between the branches.
+--
+--# The below is a more-or-less exact translation to shell of the C code
+--# for the default behaviour for git's push-to-checkout hook defined in
+--# the push_to_deploy() function in builtin/receive-pack.c.
+--#
+--# Note that the hook will be executed from the repository directory,
+--# not from the working tree, so if you want to perform operations on
+--# the working tree, you will have to adapt your code accordingly, e.g.
+--# by adding "cd .." or using relative paths.
+--
+--if ! git update-index -q --ignore-submodules --refresh
+--then
+--	die "Up-to-date check failed"
+--fi
+--
+--if ! git diff-files --quiet --ignore-submodules --
+--then
+--	die "Working directory has unstaged changes"
+--fi
+--
+--# This is a rough translation of:
+--#
+--#   head_has_history() ? "HEAD" : EMPTY_TREE_SHA1_HEX
+--if git cat-file -e HEAD 2>/dev/null
+--then
+--	head=HEAD
+--else
+--	head=$(git hash-object -t tree --stdin </dev/null)
+--fi
+--
+--if ! git diff-index --quiet --cached --ignore-submodules $head --
+--then
+--	die "Working directory has staged changes"
+--fi
+--
+--if ! git read-tree -u -m "$commit"
+--then
+--	die "Could not update working tree to new HEAD"
+--fi
+-diff -urN ./.git/hooks/update.sample ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/update.sample
+---- ./.git/hooks/update.sample	2022-03-25 12:32:28.689827000 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/hooks/update.sample	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,128 +0,0 @@
+--#!/bin/sh
+--#
+--# An example hook script to block unannotated tags from entering.
+--# Called by "git receive-pack" with arguments: refname sha1-old sha1-new
+--#
+--# To enable this hook, rename this file to "update".
+--#
+--# Config
+--# ------
+--# hooks.allowunannotated
+--#   This boolean sets whether unannotated tags will be allowed into the
+--#   repository.  By default they won't be.
+--# hooks.allowdeletetag
+--#   This boolean sets whether deleting tags will be allowed in the
+--#   repository.  By default they won't be.
+--# hooks.allowmodifytag
+--#   This boolean sets whether a tag may be modified after creation. By default
+--#   it won't be.
+--# hooks.allowdeletebranch
+--#   This boolean sets whether deleting branches will be allowed in the
+--#   repository.  By default they won't be.
+--# hooks.denycreatebranch
+--#   This boolean sets whether remotely creating branches will be denied
+--#   in the repository.  By default this is allowed.
+--#
+--
+--# --- Command line
+--refname="$1"
+--oldrev="$2"
+--newrev="$3"
+--
+--# --- Safety check
+--if [ -z "$GIT_DIR" ]; then
+--	echo "Don't run this script from the command line." >&2
+--	echo " (if you want, you could supply GIT_DIR then run" >&2
+--	echo "  $0 <ref> <oldrev> <newrev>)" >&2
+--	exit 1
+--fi
+--
+--if [ -z "$refname" -o -z "$oldrev" -o -z "$newrev" ]; then
+--	echo "usage: $0 <ref> <oldrev> <newrev>" >&2
+--	exit 1
+--fi
+--
+--# --- Config
+--allowunannotated=$(git config --type=bool hooks.allowunannotated)
+--allowdeletebranch=$(git config --type=bool hooks.allowdeletebranch)
+--denycreatebranch=$(git config --type=bool hooks.denycreatebranch)
+--allowdeletetag=$(git config --type=bool hooks.allowdeletetag)
+--allowmodifytag=$(git config --type=bool hooks.allowmodifytag)
+--
+--# check for no description
+--projectdesc=$(sed -e '1q' "$GIT_DIR/description")
+--case "$projectdesc" in
+--"Unnamed repository"* | "")
+--	echo "*** Project description file hasn't been set" >&2
+--	exit 1
+--	;;
+--esac
+--
+--# --- Check types
+--# if $newrev is 0000...0000, it's a commit to delete a ref.
+--zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+--if [ "$newrev" = "$zero" ]; then
+--	newrev_type=delete
+--else
+--	newrev_type=$(git cat-file -t $newrev)
+--fi
+--
+--case "$refname","$newrev_type" in
+--	refs/tags/*,commit)
+--		# un-annotated tag
+--		short_refname=${refname##refs/tags/}
+--		if [ "$allowunannotated" != "true" ]; then
+--			echo "*** The un-annotated tag, $short_refname, is not allowed in this repository" >&2
+--			echo "*** Use 'git tag [ -a | -s ]' for tags you want to propagate." >&2
+--			exit 1
+--		fi
+--		;;
+--	refs/tags/*,delete)
+--		# delete tag
+--		if [ "$allowdeletetag" != "true" ]; then
+--			echo "*** Deleting a tag is not allowed in this repository" >&2
+--			exit 1
+--		fi
+--		;;
+--	refs/tags/*,tag)
+--		# annotated tag
+--		if [ "$allowmodifytag" != "true" ] && git rev-parse $refname > /dev/null 2>&1
+--		then
+--			echo "*** Tag '$refname' already exists." >&2
+--			echo "*** Modifying a tag is not allowed in this repository." >&2
+--			exit 1
+--		fi
+--		;;
+--	refs/heads/*,commit)
+--		# branch
+--		if [ "$oldrev" = "$zero" -a "$denycreatebranch" = "true" ]; then
+--			echo "*** Creating a branch is not allowed in this repository" >&2
+--			exit 1
+--		fi
+--		;;
+--	refs/heads/*,delete)
+--		# delete branch
+--		if [ "$allowdeletebranch" != "true" ]; then
+--			echo "*** Deleting a branch is not allowed in this repository" >&2
+--			exit 1
+--		fi
+--		;;
+--	refs/remotes/*,commit)
+--		# tracking branch
+--		;;
+--	refs/remotes/*,delete)
+--		# delete tracking branch
+--		if [ "$allowdeletebranch" != "true" ]; then
+--			echo "*** Deleting a tracking branch is not allowed in this repository" >&2
+--			exit 1
+--		fi
+--		;;
+--	*)
+--		# Anything else (is there anything else?)
+--		echo "*** Update hook: unknown type of update to ref $refname of type $newrev_type" >&2
+--		exit 1
+--		;;
+--esac
+--
+--# --- Finished
+--exit 0
+-Binary files ./.git/index and ../welcome-to-ocaml-GabrielFerreira7-main/.git/index differ
+-diff -urN ./.git/info/exclude ../welcome-to-ocaml-GabrielFerreira7-main/.git/info/exclude
+---- ./.git/info/exclude	2022-03-25 12:32:28.689827000 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/info/exclude	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,6 +0,0 @@
+--# git ls-files --others --exclude-from=.git/info/exclude
+--# Lines that start with '#' are comments.
+--# For a project mostly in C, the following would be a good set of
+--# exclude patterns (uncomment them if you want to use them):
+--# *.[oa]
+--# *~
+-diff -urN ./.git/logs/HEAD ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/HEAD
+---- ./.git/logs/HEAD	2022-03-25 21:49:07.242893300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/HEAD	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,3 +0,0 @@
+--0000000000000000000000000000000000000000 15255654640e7ed07ae3fa6dc036f3f7f8273770 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648222468 -0300	initial pull
+--15255654640e7ed07ae3fa6dc036f3f7f8273770 61846b9ab78463407054ae2fc542e9f940bb809a GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648253092 -0300	commit: primeira modificacao
+--61846b9ab78463407054ae2fc542e9f940bb809a 3bef6a0d0b535023a17901ba43335bf894a46c14 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648255747 -0300	commit: segunda modificacao
+-diff -urN ./.git/logs/refs/heads/main ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/refs/heads/main
+---- ./.git/logs/refs/heads/main	2022-03-25 21:49:07.242893300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/refs/heads/main	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,3 +0,0 @@
+--0000000000000000000000000000000000000000 15255654640e7ed07ae3fa6dc036f3f7f8273770 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648222468 -0300	initial pull
+--15255654640e7ed07ae3fa6dc036f3f7f8273770 61846b9ab78463407054ae2fc542e9f940bb809a GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648253092 -0300	commit: primeira modificacao
+--61846b9ab78463407054ae2fc542e9f940bb809a 3bef6a0d0b535023a17901ba43335bf894a46c14 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648255747 -0300	commit: segunda modificacao
+-diff -urN ./.git/logs/refs/remotes/origin/main ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/refs/remotes/origin/main
+---- ./.git/logs/refs/remotes/origin/main	2022-03-25 21:49:13.829924300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/logs/refs/remotes/origin/main	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,3 +0,0 @@
+--0000000000000000000000000000000000000000 15255654640e7ed07ae3fa6dc036f3f7f8273770 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648222468 -0300	pull origin main: storing head
+--15255654640e7ed07ae3fa6dc036f3f7f8273770 61846b9ab78463407054ae2fc542e9f940bb809a GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648253117 -0300	update by push
+--61846b9ab78463407054ae2fc542e9f940bb809a 3bef6a0d0b535023a17901ba43335bf894a46c14 GabrielFerreira7 <gabrielbicalhoferreira@gmail.com> 1648255753 -0300	update by push
+-diff -urN ./.git/objects/09/095e73721d36cf743129881ca73db74be2fc5a ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/09/095e73721d36cf743129881ca73db74be2fc5a
+---- ./.git/objects/09/095e73721d36cf743129881ca73db74be2fc5a	2022-03-25 21:48:53.129037000 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/09/095e73721d36cf743129881ca73db74be2fc5a	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,2 +0,0 @@
+--x}ë=O√0Üô˝+NeIÜZ*B >6$TEés¥V¸•ÿiã™˛wl∑†62å~ﬁ˜Óﬁ;7“4ps{w±-∂∂[:x°¨È=‹…#Ïˆ∞á9!=zÖΩPıb]√ôíØåwlâßg0∫.ˇÒMıÚº†æÆg≥Tu÷'€ºñÃ£Ûöêòâ:ﬂ¢^S’=áƒkÊÖ—∞4SZL‘◊4µù◊$Ni!€mÛ2⁄ä∂É∆˙*#|
+--›J—Ñı–9‘^0ôq•q>xc3¯êN∫úfÌ∂∆≠E?eìIn‚12íıB·_úrixGç#…ëÆÿÀMœÏâ†b‹Ωø˙˝Ï£0áb(§U(-{Û¨ë¯„´é7«=πÍ¢,Àì·k«M„.*≤'ﬂoH„t
+-\ No newline at end of file
+-Binary files ./.git/objects/15/255654640e7ed07ae3fa6dc036f3f7f8273770 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/15/255654640e7ed07ae3fa6dc036f3f7f8273770 differ
+-Binary files ./.git/objects/1c/ddc455aed936b2062c0672b9b5dd05558a9724 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/1c/ddc455aed936b2062c0672b9b5dd05558a9724 differ
+-Binary files ./.git/objects/22/adc1554b2fd558746afcb49a0defb9850964b2 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/22/adc1554b2fd558746afcb49a0defb9850964b2 differ
+-diff -urN ./.git/objects/26/1fb53c8466b1f87e8dd99ca2d2f2a68866c7c2 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/26/1fb53c8466b1f87e8dd99ca2d2f2a68866c7c2
+---- ./.git/objects/26/1fb53c8466b1f87e8dd99ca2d2f2a68866c7c2	2022-03-25 12:34:28.373693500 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/26/1fb53c8466b1f87e8dd99ca2d2f2a68866c7c2	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,3 +0,0 @@
+--xΩé±
+--√ Ñ;Á)‹CÉ˛Õ•tÌ3î*¶b,˙gË€W»⁄π7‹pwùœ)Eb`‡D%6‡
+--% q¥JÃì1àZ8£ÊQ8•ΩGîÅwvß%ˆä¥ÏÓÏW[k…9=\¶'ªh≠ë˝œ˛∂◊PÍ∞ÂﬁÎg86ÉœÈ ÑV@s≈zﬁ‘µ¥§Twﬂ"Eª≤É˘!œ\
+-\ No newline at end of file
+-Binary files ./.git/objects/35/dcad2250d31d9e080d9703a8578c5587005c8f and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/35/dcad2250d31d9e080d9703a8578c5587005c8f differ
+-Binary files ./.git/objects/3b/ef6a0d0b535023a17901ba43335bf894a46c14 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/3b/ef6a0d0b535023a17901ba43335bf894a46c14 differ
+-diff -urN ./.git/objects/40/067c860d6d97aef1946511e04616303f54a661 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/40/067c860d6d97aef1946511e04616303f54a661
+---- ./.git/objects/40/067c860d6d97aef1946511e04616303f54a661	2022-03-25 12:34:28.576816600 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/40/067c860d6d97aef1946511e04616303f54a661	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,2 +0,0 @@
+--xÖêAk¬@Ö=ÁW<Á¥Bä^§á)x\Ç&qHñnwm≤A¸˜ùµQlA‹”Ã0Ûﬁ˜∂≤æ¬À|1±∏ªñ≠ıPØ	fkß©™[Æ?—áŒ∏FÉ˙Úã«é†6gk™t/”¶c≤z˜≠#ŸΩÃgàÌîí‰ÊT6¸»«∏p5ëÚøá]ºÕ≥,”»Û_…ë8™˚#ª:åì ›‡F¬ù|g4ì˙∫.{≠æá“ˆ€¡H÷ªﬂ(ÙR4˛>E¬ 
+--x™Yç"˘ïtoo
+-\ No newline at end of file
+-Binary files ./.git/objects/42/09e9365ea798add7bd04795166aa81899ee9b5 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/42/09e9365ea798add7bd04795166aa81899ee9b5 differ
+-Binary files ./.git/objects/43/33f174bbb7bc7f3107e9cdd51050654f79b2e4 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/43/33f174bbb7bc7f3107e9cdd51050654f79b2e4 differ
+-Binary files ./.git/objects/55/336ad0f9bc4b95cff40619cb9e9f46c3829599 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/55/336ad0f9bc4b95cff40619cb9e9f46c3829599 differ
+-Binary files ./.git/objects/61/846b9ab78463407054ae2fc542e9f940bb809a and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/61/846b9ab78463407054ae2fc542e9f940bb809a differ
+-Binary files ./.git/objects/63/201e5efe8764ba27ad05b28315f91ad40913e0 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/63/201e5efe8764ba27ad05b28315f91ad40913e0 differ
+-diff -urN ./.git/objects/63/557d6aa0f1f4f157d850a91dbe42602d13bcb3 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/63/557d6aa0f1f4f157d850a91dbe42602d13bcb3
+---- ./.git/objects/63/557d6aa0f1f4f157d850a91dbe42602d13bcb3	2022-03-25 21:03:32.282378100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/63/557d6aa0f1f4f157d850a91dbe42602d13bcb3	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--x-ÃA@0ÑaÎûbñ4±≥aaÌ“2JÚhRèÛ´∞ö?˘íÒ=⁄¶(-∂Cô7qÅÆƒ@ëà=Œó∂2ÊvÇêH›éÄß¶7Í˛Øœ©£Ãúˇ^Àc†k 
+-\ No newline at end of file
+-Binary files ./.git/objects/65/0561bdb08308b1b9c8b43e17b53bd8772cb526 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/65/0561bdb08308b1b9c8b43e17b53bd8772cb526 differ
+-Binary files ./.git/objects/6d/b90a15fd39aadec9e688bfec4360f21e5ce904 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/6d/b90a15fd39aadec9e688bfec4360f21e5ce904 differ
+-diff -urN ./.git/objects/86/d9c6c9cfcb1a1d39b71205dc3f65e7535508be ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/86/d9c6c9cfcb1a1d39b71205dc3f65e7535508be
+---- ./.git/objects/86/d9c6c9cfcb1a1d39b71205dc3f65e7535508be	2022-03-25 12:34:28.451820000 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/86/d9c6c9cfcb1a1d39b71205dc3f65e7535508be	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--xU Õ¬ `œ<≈óÉ&5∆_Ü,0b#°4Ì„KΩyõôol,ñ¶€˝ƒQr øf–ıÚ–J±kíYlƒQ2ötòR%ô◊±PoÎœ™∏è(‚,	¥!∫íÜ{Tdø("ñ1v,ùû€‹ﬂÁ#éq≠ª¡^·˛DÎ/ŸD2
+-\ No newline at end of file
+-Binary files ./.git/objects/8d/d3721cd46caaff5d1d64c3e17253f8b72414a5 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/8d/d3721cd46caaff5d1d64c3e17253f8b72414a5 differ
+-diff -urN ./.git/objects/9c/2de28d8ff4ecfb9786d94895f0fffdab8a10a6 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/9c/2de28d8ff4ecfb9786d94895f0fffdab8a10a6
+---- ./.git/objects/9c/2de28d8ff4ecfb9786d94895f0fffdab8a10a6	2022-03-25 12:34:28.530175100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/9c/2de28d8ff4ecfb9786d94895f0fffdab8a10a6	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,2 +0,0 @@
+--x»9¿ —‘ú¬%.SÂ8–/êX,õnÈÊM™#—˜>æñ§Q∑#ﬂcµ}_ï^KGò∞iøE!:2Ãnãë»
+--XÇ<ôŸ	B
+-\ No newline at end of file
+-Binary files ./.git/objects/9f/e3415da62784f38fa1948a14ca317037f62577 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/9f/e3415da62784f38fa1948a14ca317037f62577 differ
+-diff -urN ./.git/objects/a0/56e5e8c7bdb58570cabe27775a0cd4ebf6910e ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a0/56e5e8c7bdb58570cabe27775a0cd4ebf6910e
+---- ./.git/objects/a0/56e5e8c7bdb58570cabe27775a0cd4ebf6910e	2022-03-25 12:34:28.420894400 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a0/56e5e8c7bdb58570cabe27775a0cd4ebf6910e	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,3 +0,0 @@
+--x]R›k€0ﬂ≥˛ä#O-òÆÌ`îæ)∂‹à9ñëïfyÙák8V∞‰Ö˛˜;9I«£”›ÔÎT˜∂Üß«Ô/_÷\Af=8MHlO£9tÓö{x~|~ÇM*
+--X∆Ò∑ÁB
+--=çs∆`tz‘ı∆j∫ç`?jvMWçÅ∑Pp“£√[˚ f8@ÚÏÙ¬8ª˜Áj‘ÿ‹BÂúmLÖx–⁄f:Í¡W>ÌMØ‹˘N√¢ºN,ÓgíVW=1¢i∏]¡Ÿ¯ŒNFÌ¸höÄÅö~jÉÜ€uoéÊ ∆gÛé†Ú…°É†3Ç£mÕ>¸ılÎ4’Ωq]≠	–ı‰±”Ö‚úb||µ#8›˜ÍûΩ˛U7˜Ñ|0‰øF‰BÂ‹Ÿ„øNå#˚iêC¡é÷bd3„/›¯P	 ˜∂ÔÌ9XkÏ–ö‡◊Ω¢™™Ìo={πÏv∞•ŒqœòE\∂zΩr]’˜PÎk`»ãÒbÈ”∫õjÁqÒ¶Í·d«ôÔõ»øbPäTm©d¿K(§xÁ	K`AK</"ÿrµÿ!iÆv R†˘~<âÄ˝,$+KíuëqÜ5û«Ÿ&·˘,q.¯Ä9>cU·ä3úKaÕdºBd∫‰Wªà§\Â3(T*o2*°ÿ»BîÈÑÕyûJdakñ´d≈∞w<@π¢Y®›†zÙA,äù‰o++ë%ãKÜ Ë2c*4gîØ#HËöæu¢H⁄.Í`ªb°¯(~±‚"6bë+â«]Jı9∫Â%ãÄJ^Ü@R)÷	q‚¢#ŒÂÏÇ¢û˙‹∂Ñ¿6h˙¶F3ƒ¬ı‰≥≈[Û˘÷√U.
+-\ No newline at end of file
+-Binary files ./.git/objects/a1/8e08402bb7d142966b692999d2a104d8f4d072 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a1/8e08402bb7d142966b692999d2a104d8f4d072 differ
+-Binary files ./.git/objects/a8/b51fcb320f5aceb0c350e57e95827bf4ccce48 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a8/b51fcb320f5aceb0c350e57e95827bf4ccce48 differ
+-diff -urN ./.git/objects/a9/273fa72d0cd5b8d97d68d3606a869ac3316db0 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a9/273fa72d0cd5b8d97d68d3606a869ac3316db0
+---- ./.git/objects/a9/273fa72d0cd5b8d97d68d3606a869ac3316db0	2022-03-25 12:34:28.592448300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/a9/273fa72d0cd5b8d97d68d3606a869ac3316db0	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,2 +0,0 @@
+--x=å±
+--Ñ0≠˝äáï6ÇÕ5áÿ⁄X[JÇã∑∞n$ÆE˛ﬁàp’ÉaÊy	]˜)ÑªcE_GdµÂ¥<™˘Á|"Ö+B›N™o∂û$˚à‰÷EX	u÷O∫ætJ¬æI$¥[$≤ÁVõÚÀP(o
+-\ No newline at end of file
+-diff -urN ./.git/objects/aa/588ce0801d2a12388fb97eb1da110f628b24e7 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/aa/588ce0801d2a12388fb97eb1da110f628b24e7
+---- ./.git/objects/aa/588ce0801d2a12388fb97eb1da110f628b24e7	2022-03-25 21:48:53.144678800 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/aa/588ce0801d2a12388fb97eb1da110f628b24e7	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--xçè=¬0Üù˚+^2ô•∫q’¡Y\Wz÷@ºHë˛{/~‹úó˜ΩÁπ6ƒÀ≈j8„J^∞ÆÄ[Úí›êıÈa ∆xO∫Ú¶—T©hâ©s¡cn·eÍ≥tÔÈ|?ﬂ÷[!÷}bŒeØX€TS¯€	Ö72%<8q¡¢çI6¥£Lˇpé⁄%›ap¬õ‡‚ŸÈqøJúı™_Æ÷ˇèK¡X´MÛ≤CW€@•´'9†eQ
+-\ No newline at end of file
+-Binary files ./.git/objects/ac/ce88b45c4d6e22f5508500c25be8a1e71bfa38 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/ac/ce88b45c4d6e22f5508500c25be8a1e71bfa38 differ
+-Binary files ./.git/objects/bd/e81230a474b81c4d6d6fb0cb6c97e02563f64c and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/bd/e81230a474b81c4d6d6fb0cb6c97e02563f64c differ
+-Binary files ./.git/objects/c1/b4521e31fd15eaf56a75cbfd0f9902783a07d6 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/c1/b4521e31fd15eaf56a75cbfd0f9902783a07d6 differ
+-Binary files ./.git/objects/d0/1de1c2dd2aede0b90a92b779fc8ec22c8e2739 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/d0/1de1c2dd2aede0b90a92b779fc8ec22c8e2739 differ
+-Binary files ./.git/objects/d3/7c5a80489851d48067645141e9929f78271288 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/d3/7c5a80489851d48067645141e9929f78271288 differ
+-Binary files ./.git/objects/d5/fc52848ddf5c285ca668fce39c536aae8acaa6 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/d5/fc52848ddf5c285ca668fce39c536aae8acaa6 differ
+-diff -urN ./.git/objects/e5/ada11cc6630a2da14cff3cb0bff9a0d791b74f ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/e5/ada11cc6630a2da14cff3cb0bff9a0d791b74f
+---- ./.git/objects/e5/ada11cc6630a2da14cff3cb0bff9a0d791b74f	2022-03-25 12:34:28.436188300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/e5/ada11cc6630a2da14cff3cb0bff9a0d791b74f	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,2 +0,0 @@
+--x]çK¬0DYÁŸ %Kv¿eêùz…n™|‚ÓuQCÅù˝f49°=]ŒG
+--≠2ÎF≤w‚êÑº˛SCé·ˆè%ç©|79bÜ ¨∑˜∆∏êAtd†©ÿ„„x›¶_Ô∏R©›)3®t%´∂Ôˇ“]—ª◊÷ÆE@
+-\ No newline at end of file
+-Binary files ./.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391 differ
+-Binary files ./.git/objects/f1/204939355a41f8779961b7692f51b46cc993e0 and ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/f1/204939355a41f8779961b7692f51b46cc993e0 differ
+-diff -urN ./.git/objects/f2/3c48d28a8d4891ea3e1f45248df59bf88d4ac0 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/f2/3c48d28a8d4891ea3e1f45248df59bf88d4ac0
+---- ./.git/objects/f2/3c48d28a8d4891ea3e1f45248df59bf88d4ac0	2022-03-25 21:03:32.266972400 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/f2/3c48d28a8d4891ea3e1f45248df59bf88d4ac0	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--x%å1¿ ;˜å∞†vË{†QDÑ~ﬂ¥],üm9QKÊ<ÆÕ¶˚⁄ç≠±Ä)KßÑï∞B C^Ê‹[ı,Üyòy∏∑˛o¥®?ü˙L-ﬂæâNwˆ&p
+-\ No newline at end of file
+-diff -urN ./.git/objects/fd/1f8292cd76741d938e7ff780ff9a44f0f7f7ee ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/fd/1f8292cd76741d938e7ff780ff9a44f0f7f7ee
+---- ./.git/objects/fd/1f8292cd76741d938e7ff780ff9a44f0f7f7ee	2022-03-25 21:03:32.282378100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/fd/1f8292cd76741d938e7ff780ff9a44f0f7f7ee	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,2 +0,0 @@
+--xuê1k√0Ö;˚WºjíLÒêN!Ñ,öBÁê%B∆WG†úÇ¨¸Ô{≤”°n	›Ω˜Óæ6ƒœÎıC†åãÛåmË˙ö<g;dπz®√Ÿe¯c¸L`w°‘F˙Ê.‚.x&h˝>ﬂ6ØBl˙DîãöçŸ†6“^2,∂H‰:;K<KeÈ•ˇäú|üœåóHè î˛5≠~õÓ∑≤ H.·Fâ Fhc‚éÚrÚ≥ZMÂ1tçDîŸ‰Ëzπ≠˙V(ú0ì≤Ò√
+--∑ü([◊ùTÍw¶ùÀŒQ™E‹D™˙∏{Ä,
+-\ No newline at end of file
+-diff -urN ./.git/objects/fe/4933433c158af4c0aa226d60256f299db4da55 ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/fe/4933433c158af4c0aa226d60256f299db4da55
+---- ./.git/objects/fe/4933433c158af4c0aa226d60256f299db4da55	2022-03-25 12:34:28.576816600 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/objects/fe/4933433c158af4c0aa226d60256f299db4da55	1969-12-31 21:00:00.000000000 -0300
+-@@ -1,3 +0,0 @@
+--x=ç1
+--1D≠˜#XädSX-¶qEm,≈2—Y»ÊC≤≤§Û,ÕìòD∞õ?Ûfæql–n€≈Áı∆û)bòuÇ%ÁX5¿
+--3π;èÑÆÎ/áÏÏpfÎ])Ñ®‚ó^≠û0D$~x=í¬±l≠ˇ≠e¶OsÈê*<ØpÀJgG G∞{lö/Ïµ3V
+-\ No newline at end of file
+-diff -urN ./.git/refs/heads/main ../welcome-to-ocaml-GabrielFerreira7-main/.git/refs/heads/main
+---- ./.git/refs/heads/main	2022-03-25 21:49:07.242893300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/refs/heads/main	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--3bef6a0d0b535023a17901ba43335bf894a46c14
+-diff -urN ./.git/refs/remotes/origin/main ../welcome-to-ocaml-GabrielFerreira7-main/.git/refs/remotes/origin/main
+---- ./.git/refs/remotes/origin/main	2022-03-25 21:49:13.829924300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.git/refs/remotes/origin/main	1969-12-31 21:00:00.000000000 -0300
+-@@ -1 +0,0 @@
+--3bef6a0d0b535023a17901ba43335bf894a46c14
+-diff -urN ./.github/workflows/workflow.yml ../welcome-to-ocaml-GabrielFerreira7-main/.github/workflows/workflow.yml
+---- ./.github/workflows/workflow.yml	2022-03-25 22:37:09.418972600 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.github/workflows/workflow.yml	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,45 +1,47 @@
+--name: Main workflow
+--
+--on:
+--  # pull_request:
+--  push:
+--
+--jobs:
+--  build:
+--    strategy:
+--      fail-fast: false
+--      matrix:
+--        os:
+--          #- macos-latest
+--          - ubuntu-latest
+--          #- windows-latest
+--        ocaml-compiler:
+--          - 4.13.x
+--
+--    runs-on: ${{ matrix.os }}
+--
+--    steps:
+--      - name: Checkout code
+--        uses: actions/checkout@v2
+--
+--      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+--        uses: ocaml/setup-ocaml@v2
+--        with:
+--          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+--
+--      - name: Install dependencies
+--        run: |
+--          opam install dune
+--          opam exec -- dune build welcome.opam
+--          opam install . --deps-only --with-test
+--
+--      - name: Build
+--        run: |
+--          opam exec -- dune build
+--
+--      - name: Test
+--        run: |
+--          opam exec -- dune runtest &> runtest.out.txt || true
+--          cat runtest.out.txt
+--          echo $(grep "^ ‚Ä¢ " runtest.out.txt | wc -l) "failures"
+--          if grep "^ ‚Ä¢ " runtest.out.txt; then false; else true; fi
+-+name: Main workflow
+-+
+-+on:
+-+  # pull_request:
+-+  push:
+-+
+-+jobs:
+-+  build:
+-+    strategy:
+-+      fail-fast: false
+-+      matrix:
+-+        os:
+-+          #- macos-latest
+-+          - ubuntu-latest
+-+          #- windows-latest
+-+        ocaml-compiler:
+-+          - 4.13.x
+-+
+-+    runs-on: ${{ matrix.os }}
+-+
+-+    steps:
+-+      - name: Checkout code
+-+        uses: actions/checkout@v2
+-+
+-+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+-+        uses: ocaml/setup-ocaml@v2
+-+        with:
+-+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+-+
+-+      - name: Install dependencies
+-+        run: |
+-+          opam install ptime
+-+          opam install dune
+-+          opam exec -- dune build welcome.opam
+-+          opam install . --deps-only --with-test
+-+
+-+      - name: Build
+-+        run: |
+-+          opam exec -- dune build
+-+
+-+      - name: Test
+-+        run: |
+-+          opam exec -- dune runtest &> runtest.out.txt || true
+-+          cat runtest.out.txt
+-+          echo $(grep "^ ‚Ä¢ " runtest.out.txt | wc -l) "failures"
+-+          if grep "^ ‚Ä¢ " runtest.out.txt; then false; else true; fi
+-+
+-diff -urN ./.gitignore ../welcome-to-ocaml-GabrielFerreira7-main/.gitignore
+---- ./.gitignore	2022-03-25 12:34:28.748692600 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/.gitignore	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,29 +1,29 @@
+--*.annot
+--*.cmo
+--*.cma
+--*.cmi
+--*.a
+--*.o
+--*.cmx
+--*.cmxs
+--*.cmxa
+--
+--# ocamlbuild working directory
+--_build/
+--
+--# ocamlbuild targets
+--*.byte
+--*.native
+--
+--# oasis generated files
+--setup.data
+--setup.log
+--
+--# Merlin configuring file for Vim and Emacs
+--.merlin
+--
+--# Dune generated files
+--*.install
+--
+--# Local OPAM switch
+--_opam/
+-+*.annot
+-+*.cmo
+-+*.cma
+-+*.cmi
+-+*.a
+-+*.o
+-+*.cmx
+-+*.cmxs
+-+*.cmxa
+-+
+-+# ocamlbuild working directory
+-+_build/
+-+
+-+# ocamlbuild targets
+-+*.byte
+-+*.native
+-+
+-+# oasis generated files
+-+setup.data
+-+setup.log
+-+
+-+# Merlin configuring file for Vim and Emacs
+-+.merlin
+-+
+-+# Dune generated files
+-+*.install
+-+
+-+# Local OPAM switch
+-+_opam/
+-diff -urN ./LICENSE ../welcome-to-ocaml-GabrielFerreira7-main/LICENSE
+---- ./LICENSE	2022-03-25 12:34:28.748692600 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/LICENSE	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,21 +1,21 @@
+--MIT License
+--
+--Copyright (c) 2021 UFOP BCC328
+--
+--Permission is hereby granted, free of charge, to any person obtaining a copy
+--of this software and associated documentation files (the "Software"), to deal
+--in the Software without restriction, including without limitation the rights
+--to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+--copies of the Software, and to permit persons to whom the Software is
+--furnished to do so, subject to the following conditions:
+--
+--The above copyright notice and this permission notice shall be included in all
+--copies or substantial portions of the Software.
+--
+--THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+--IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+--FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+--AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+--LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+--OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+--SOFTWARE.
+-+MIT License
+-+
+-+Copyright (c) 2021 UFOP BCC328
+-+
+-+Permission is hereby granted, free of charge, to any person obtaining a copy
+-+of this software and associated documentation files (the "Software"), to deal
+-+in the Software without restriction, including without limitation the rights
+-+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-+copies of the Software, and to permit persons to whom the Software is
+-+furnished to do so, subject to the following conditions:
+-+
+-+The above copyright notice and this permission notice shall be included in all
+-+copies or substantial portions of the Software.
+-+
+-+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+-+SOFTWARE.
+-diff -urN ./README.md ../welcome-to-ocaml-GabrielFerreira7-main/README.md
+---- ./README.md	2022-03-25 12:34:28.748692600 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/README.md	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,40 +1,40 @@
+--# Welcome
+--
+--Working with a simple OCaml project using `opam` and `dune`.
+--
+--This project implements a library and an application to greet the user with a message.
+--
+--There is a video explaining the project in the Moodle virtual classroom for the course. Watch it.
+--
+--## Exercise
+--
+--Modify the project to add a question to the user, asking his year of birth, read the answer, and then display the user age.
+--
+--You will need an aditional library to compute the age of the user, because the standard library does not have this functionality. Use the library [`ptime`](https://erratique.ch/software/ptime/doc/Ptime.html), which has platform independent support for POSIX time.
+--
+--- With the help of `opam`, install the `ptime` package in your system, if needed.
+--- Modify the `dune-project` to add a dependence on the package `ptime` to the project.
+--- Modify the `lib/dune` file to list the dependence libraries `ptime` and `ptime.clock.os` in the `library` stanza:
+--  ``` dune
+--    (libraries ptime ptime.clock.os)
+--  ```
+--- Add a function `get_age` to the module `Mylib.Hello`.
+--  - This function should returns the number of years from a given year to the current year.
+--  - Use the library [`ptime`](https://erratique.ch/software/ptime/doc/Ptime.html) to handle dates:
+--     - `Ptime_clock.now` can be used to get the current POSIX timestamp of the system.
+--     - `Ptime.to_date_time` can be used to extract the date and time of a given timestamp.
+--     - Use pattern matching to extract the year from the result of `Ptime.to_date_time`. Put something like the following code snippet *inside your `get_age` function*:
+--       ``` ocaml
+--       let get_age ... =
+--         ...
+--         let just_now = Ptime_clock.now ()
+--         let ((current_year, _, _), _) = Ptime.to_date_time just_now
+--         ...
+--       ```
+--  - Do not forget to add this new function to the interface of the module `Mylib.Hello`.
+--- Modify the application to:
+--  - ask the year of birth of the user,
+--  - read the answer, and
+--  - calculate and print the age
+--- Build and test the application.
+--- When ready, submit your solution to your private repository in github.
+-+# Welcome
+-+
+-+Working with a simple OCaml project using `opam` and `dune`.
+-+
+-+This project implements a library and an application to greet the user with a message.
+-+
+-+There is a video explaining the project in the Moodle virtual classroom for the course. Watch it.
+-+
+-+## Exercise
+-+
+-+Modify the project to add a question to the user, asking his year of birth, read the answer, and then display the user age.
+-+
+-+You will need an aditional library to compute the age of the user, because the standard library does not have this functionality. Use the library [`ptime`](https://erratique.ch/software/ptime/doc/Ptime.html), which has platform independent support for POSIX time.
+-+
+-+- With the help of `opam`, install the `ptime` package in your system, if needed.
+-+- Modify the `dune-project` to add a dependence on the package `ptime` to the project.
+-+- Modify the `lib/dune` file to list the dependence libraries `ptime` and `ptime.clock.os` in the `library` stanza:
+-+  ``` dune
+-+    (libraries ptime ptime.clock.os)
+-+  ```
+-+- Add a function `get_age` to the module `Mylib.Hello`.
+-+  - This function should returns the number of years from a given year to the current year.
+-+  - Use the library [`ptime`](https://erratique.ch/software/ptime/doc/Ptime.html) to handle dates:
+-+     - `Ptime_clock.now` can be used to get the current POSIX timestamp of the system.
+-+     - `Ptime.to_date_time` can be used to extract the date and time of a given timestamp.
+-+     - Use pattern matching to extract the year from the result of `Ptime.to_date_time`. Put something like the following code snippet *inside your `get_age` function*:
+-+       ``` ocaml
+-+       let get_age ... =
+-+         ...
+-+         let just_now = Ptime_clock.now ()
+-+         let ((current_year, _, _), _) = Ptime.to_date_time just_now
+-+         ...
+-+       ```
+-+  - Do not forget to add this new function to the interface of the module `Mylib.Hello`.
+-+- Modify the application to:
+-+  - ask the year of birth of the user,
+-+  - read the answer, and
+-+  - calculate and print the age
+-+- Build and test the application.
+-+- When ready, submit your solution to your private repository in github.
+-diff -urN ./correct.sh ../welcome-to-ocaml-GabrielFerreira7-main/correct.sh
+---- ./correct.sh	2022-03-25 12:34:28.764313500 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/correct.sh	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,8 +1,8 @@
+--#! /bin/sh
+--
+--dune runtest &> runtest.out.txt
+--echo =============================================
+--cat runtest.out.txt
+--echo =============================================
+--echo $(grep "^ ‚Ä¢ " runtest.out.txt | wc -l) "failures"
+--if grep "^ ‚Ä¢ " runtest.out.txt; then false; else true; fi
+-+#! /bin/sh
+-+
+-+dune runtest &> runtest.out.txt
+-+echo =============================================
+-+cat runtest.out.txt
+-+echo =============================================
+-+echo $(grep "^ ‚Ä¢ " runtest.out.txt | wc -l) "failures"
+-+if grep "^ ‚Ä¢ " runtest.out.txt; then false; else true; fi
+-diff -urN ./dune ../welcome-to-ocaml-GabrielFerreira7-main/dune
+---- ./dune	2022-03-25 12:34:28.764313500 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/dune	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,13 +1,13 @@
+--(executable
+-- (name welcome)
+-- (public_name welcome)
+-- (modules welcome)
+-- (libraries mylib))
+--
+--(cram
+-- (deps %{bin:welcome}))
+--
+--(test
+-- (name myalcotest)
+-- (modules myalcotest)
+-- (libraries alcotest mylib))
+-+(executable
+-+ (name welcome)
+-+ (public_name welcome)
+-+ (modules welcome)
+-+ (libraries mylib))
+-+
+-+(cram
+-+ (deps %{bin:welcome}))
+-+
+-+(test
+-+ (name myalcotest)
+-+ (modules myalcotest)
+-+ (libraries alcotest mylib))
+-diff -urN ./dune-project ../welcome-to-ocaml-GabrielFerreira7-main/dune-project
+---- ./dune-project	2022-03-25 12:34:28.764313500 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/dune-project	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,11 +1,11 @@
+--(lang dune 2.8)
+--
+--(cram enable)
+--
+--(generate_opam_files true)
+--
+--(package
+-- (name welcome)
+-- (depends
+--  (alcotest :with-test)
+-+(lang dune 2.8)
+-+
+-+(cram enable)
+-+
+-+(generate_opam_files true)
+-+
+-+(package
+-+ (name welcome)
+-+ (depends
+-+  (alcotest :with-test)
+-   (ppx_expect :with-test)))
+-\ No newline at end of file
+-diff -urN ./lib/dune ../welcome-to-ocaml-GabrielFerreira7-main/lib/dune
+---- ./lib/dune	2022-03-28 18:00:14.934570300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/lib/dune	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,5 +1,5 @@
+--(library
+-- (name mylib)
+-- (libraries ptime ptime.clock.os)
+-- (inline_tests)
+-- (preprocess (pps ppx_expect)))
+-+(library
+-+ (name mylib)
+-+ (inline_tests)
+-+ (preprocess (pps ppx_expect))
+-+ (libraries ptime ptime.clock.os))
+-diff -urN ./lib/hello.ml ../welcome-to-ocaml-GabrielFerreira7-main/lib/hello.ml
+---- ./lib/hello.ml	2022-03-25 20:13:09.812948700 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/lib/hello.ml	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,12 +1,12 @@
+--(* implementation of the Hello module *)
+--let hello = "Hello"
+--
+--let greeting name =
+--  hello ^ ", " ^ name ^ "!"
+--
+--let just_now = Ptime_clock.now ()
+--
+--let ((current_year, _, _), _) = Ptime.to_date_time just_now
+--
+--let get_age  birth_date =
+-+(* implementation of the Hello module *)
+-+let hello = "Hello"
+-+
+-+let greeting name =
+-+  hello ^ ", " ^ name ^ "!"
+-+
+-+let just_now = Ptime_clock.now ()
+-+
+-+let ((current_year, _, _), _) = Ptime.to_date_time just_now
+-+
+-+let get_age  birth_date =
+-   current_year - birth_date
+-\ No newline at end of file
+-diff -urN ./lib/hello.mli ../welcome-to-ocaml-GabrielFerreira7-main/lib/hello.mli
+---- ./lib/hello.mli	2022-03-25 19:12:51.832361100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/lib/hello.mli	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,4 +1,4 @@
+--(* interface of the Hello module *)
+--
+--val greeting : string -> string
+--val get_age : int -> int
+-+(* interface of the Hello module *)
+-+
+-+val greeting : string -> string
+-+val get_age : int -> int
+-diff -urN ./lib/test.ml ../welcome-to-ocaml-GabrielFerreira7-main/lib/test.ml
+---- ./lib/test.ml	2022-03-25 20:29:01.900168300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/lib/test.ml	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,13 +1,13 @@
+--(* inline expectation test for he library *)
+--
+--let%expect_test "greeting" =
+--  print_string (Hello.greeting "world");
+--  [%expect{|
+--    Hello, world!
+--  |}]
+--
+--let%expect_test "age" =
+--  print_int (Hello.get_age 2000);
+--  [%expect{|
+--    22
+--  |}]
+-+(* inline expectation test for he library *)
+-+
+-+let%expect_test "greeting" =
+-+  print_string (Hello.greeting "world");
+-+  [%expect{|
+-+    Hello, world!
+-+  |}]
+-+
+-+let%expect_test "age" =
+-+  print_int (Hello.get_age 2000);
+-+  [%expect{|
+-+    22
+-+  |}]
+-diff -urN ./myalcotest.ml ../welcome-to-ocaml-GabrielFerreira7-main/myalcotest.ml
+---- ./myalcotest.ml	2022-03-25 16:01:50.972159100 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/myalcotest.ml	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,10 +1,10 @@
+--let test_hello () =
+--  Alcotest.(check string) "same string" (Mylib.Hello.greeting "John") "Hello, John!"
+--
+--let test_age () =
+--  Alcotest.(check int) "same int" (Mylib.Hello.get_age 2000) 22
+--
+--let () =
+--  let open Alcotest in
+--  run "Hello" [ ("world", [ test_case "Equal" `Quick test_hello ]);
+--                ("age",   [ test_case "Equal" `Quick test_age ]) ]
+-+let test_hello () =
+-+  Alcotest.(check string) "same string" (Mylib.Hello.greeting "John") "Hello, John!"
+-+
+-+let test_age () =
+-+  Alcotest.(check int) "same int" (Mylib.Hello.get_age 2000) 22
+-+
+-+let () =
+-+  let open Alcotest in
+-+  run "Hello" [ ("world", [ test_case "Equal" `Quick test_hello ]);
+-+                ("age",   [ test_case "Equal" `Quick test_age ]) ]
+-diff -urN ./mycramtest.t ../welcome-to-ocaml-GabrielFerreira7-main/mycramtest.t
+---- ./mycramtest.t	2022-03-25 16:01:37.875982300 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/mycramtest.t	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,7 +1,7 @@
+--‚Ä¢ Does it say hello?
+--  $ welcome <<EOF
+--  > John Doe
+--  > 2000
+--  > EOF
+--  What is your name? Hello, John Doe!
+--  In what year were you born? You are 22 years old.
+-+‚Ä¢ Does it say hello?
+-+  $ welcome <<EOF
+-+  > John Doe
+-+  > 2000
+-+  > EOF
+-+  What is your name? Hello, John Doe!
+-+  In what year were you born? You are 22 years old.
+-diff -urN ./shell.nix ../welcome-to-ocaml-GabrielFerreira7-main/shell.nix
+---- ./shell.nix	2022-03-25 21:42:36.971961200 -0300
+-+++ ../welcome-to-ocaml-GabrielFerreira7-main/shell.nix	2022-03-28 17:55:37.000000000 -0300
+-@@ -1,31 +1,31 @@
+--{ nixpkgs ? import <nixpkgs> {} } :
+--
+--let
+--  inherit (nixpkgs) pkgs;
+--  ocamlPackages = pkgs.ocamlPackages;
+--  # ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_11;
+--  #ocamlPackages = pkgs.ocamlPackages_latest;
+--in
+--
+--pkgs.stdenv.mkDerivation {
+--  name = "my-ocaml-env";
+--  buildInputs = [
+--    ocamlPackages.dune_2
+--    ocamlPackages.findlib # essential
+--    ocamlPackages.ocaml
+--    ocamlPackages.utop
+--    ocamlPackages.ocaml-lsp
+--    ocamlPackages.ppx_expect
+--    ocamlPackages.alcotest
+--    ocamlPackages.ptime
+--    ocamlPackages.ptime.clock.os
+--
+--    pkgs.rlwrap
+--
+--    (pkgs.emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
+--      ocamlPackages.dune_2
+--    ])))
+--
+--    pkgs.vscode
+--  ];
+--}
+-+{ nixpkgs ? import <nixpkgs> {} } :
+-+
+-+let
+-+  inherit (nixpkgs) pkgs;
+-+  ocamlPackages = pkgs.ocamlPackages;
+-+  # ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_11;
+-+  #ocamlPackages = pkgs.ocamlPackages_latest;
+-+in
+-+
+-+pkgs.stdenv.mkDerivation {
+-+  name = "my-ocaml-env";
+-+  buildInputs = [
+-+    ocamlPackages.dune_2
+-+    ocamlPackages.findlib # essential
+-+    ocamlPackages.ocaml
+-+    ocamlPackages.utop
+-+    ocamlPackages.ocaml-lsp
+-+    ocamlPackages.ppx_expect
+-+    ocamlPackages.alcotest
+-+    ocamlPackages.ptime
+-+  
+-+
+-+    pkgs.rlwrap
+-+
+-+    (pkgs.emacsWithPackages (epkgs: (with epkgs.melpaStablePackages; [
+-+      ocamlPackages.dune_2
+-+    ])))
+-+
+-+    pkgs.vscode
+-+  ];
+-+}
+diff -urN ./welcome.ml ../welcome-to-ocaml-GabrielFerreira7-main/welcome.ml
+--- ./welcome.ml	2022-03-25 21:57:15.978555800 -0300
++++ ../welcome-to-ocaml-GabrielFerreira7-main/welcome.ml	2022-03-28 17:55:37.000000000 -0300
+@@ -1,9 +1,9 @@
+-let main =
+-  print_string "What is your name? ";
+-  let n = read_line () in
+-  print_endline ((Mylib.Hello.greeting n));
+-
+-  print_string "In what year were you born?";
+-  let data = read_line () in
+-  print_endline (" You are " ^ string_of_int(Mylib.Hello.get_age (int_of_string data)) ^ " years old."); 
+-  
++let main =
++  print_string "What is your name? ";
++  let n = read_line () in
++  print_endline ((Mylib.Hello.greeting n));
++
++  print_string "In what year were you born?";
++  let data = read_line () in
++  print_endline (" You are " ^ string_of_int(Mylib.Hello.get_age (int_of_string data)) ^ " years old."); 
++  
